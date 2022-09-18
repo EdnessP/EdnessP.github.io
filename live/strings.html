@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/localstyle.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>String Manipulation - Edness</title>
+</head>
+
+<body class="local-bg">
+    <nav id="load-nav"></nav>
+    <noscript><big><b>Warning! This site relies on JavaScript! Please enable it! The sources for all of the scripts can be viewed at <a href="https://github.com/EdnessP/EdnessP.github.io">the site's repository</a>.</b></big></noscript>
+
+    <div class="px-lg-5 pb-lg-5">
+        <h2>String Manipulation</h2>
+        <p>Various string hashing and compression algorithms reverse engineered from games.
+        <div id="load-toc"></div>
+
+        <h3>Bully (Canis Canem Edit)</h3>
+        <p>Two different hashing algorithms, one used to look up strings by their label, and another used to look up RSM sound files.
+
+        <h4>Audio Lookup Hash</h4>
+        <div class="info-table">
+            <p id="about">A 32-bit string hashing algorithm used for looking up audio files by their hashed labels.
+            <p id="indepth">The string is converted to lowercase and backslashes are converted to forward slashes. The ASCII value of each character is added to the current hash, and the resulting value is then shifted left by 10 bits with the original resulting value also added to it. Then the current hash is XORed with the current hash that's shifted right by 6 bits.<br>
+            After every character is hashed, the final hash is shifted left by 3 bits and the original resulting hash is added to it, which is then XORed with the resulting hash shifted right by 11 bits. Finally, the resulting hash is shifted left by 15 bits, and the original resulting hash is added to it again.
+            <p id="source">
+                <a href="https://github.com/EdnessP/scripts/blob/main/bully/BullyHash.py">Py (Standalone)</a>,
+                <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/BullyHash.js">JS (Live)</a>.
+        </div>
+        <form class="d-flex">
+            <input class="form-control me-2 local-hex-output" type="text" value="0x00000000" id="bully-rstm-output" readonly>
+            <input class="form-control me-1" type="text" placeholder="String input" oninput="bullyRstmHash(this.value)">
+        </form>
+        <br>
+
+        <h4>Label Lookup Hash</h4>
+        <div class="info-table">
+            <p id="about">A 32-bit string hashing algorithm used for looking up text by their hashed labels.
+            <p id="indepth">The string is first converted to upper case. For each ASCII character, the current hash is multiplied by 0x83 and the character value is added to it, and the 31st bit is then masked out.
+            <p id="source">
+                <a href="https://github.com/EdnessP/scripts/blob/main/bully/BullyHash.py">Py (Standalone)</a>,
+                <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/BullyHash.js">JS (Live)</a>.
+        </div>
+        <form class="d-flex">
+            <input class="form-control me-2 local-hex-output" type="text" value="0x00000000" id="bully-label-output" readonly>
+            <input class="form-control me-1" type="text" placeholder="String input" oninput="bullyLabelHash(this.value)">
+        </form>
+        <br>
+
+        <h3>Criterion Games</h3>
+        <p>A string compression and hashing algorithm used in Burnout 3: Takedown, Legends, Revenge, Dominator, Black, and Need for Speed: Shift (PSP).
+
+        <h4>String Compression</h4>
+        <div class="info-table">
+            <p id="about">A 64-bit string compression algorithm used to store track and vehicle names, and file identifiers.
+            <p id="indepth">The original code in the games is much longer because the ASCII values are calculated on the spot - it's been greatly simplified here. Both the character set, and the compressed character index array is now pre-made. Thus the explanation will follow my reimplementation, rather than original code.<br>
+            To compress, the string is first padded with whitespace to 12 characters and reversed. For each character, the compressed character array is indexed with the ASCII value and multiplied by the result of the total amount of characters exponented to the current string index, which is then added to the compressed integer.<br>
+            To decompress, the compressed integer is divided by the length of the character set, the remainder of which is used to index the decompressed character. The final decompressed string is then reversed.<br>
+            In other words, a glorified Base 40 conversion.
+            <p id="source">
+                <a href="https://github.com/EdnessP/scripts/blob/main/burnout/GtID.py">Py (Standalone)</a>,
+                <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/GtID.js">JS (Live)</a>.
+        </div>
+        <form class="d-flex">
+            <input class="form-control me-2 local-hex-output-long" type="text" value="0x0000000000000000" oninput="boDecompGtID(this.value)" id="bo-id-comp-output">
+            <input class="form-control me-1" type="text" placeholder="String input" oninput="boCompGtID(this.value)" id="bo-id-decomp-output" maxlength=12>
+        </form>
+        <br>
+
+        <h4>String Hashing</h4>
+        <div class="info-table">
+            <p id="about">A 32-bit string hashing algorithm used for looking up strings and vehicle parameters by their hashed labels.
+            <p id="indepth">The algorithm utilizes a pre-computed hash table, which is identical to the one used by CRC-32. For each ASCII character value, the hash, while is treated as unsigned, it's shifted right by 8 bits as a signed integer, which is then XORed by a value from the hash table indexed by XORing the character value with the 8 bits in the hash that were previously shifted away.<br>
+            In short, it's just a derivative of CRC-32 with the main difference being the final hash not being XORed with -1 (like CRC-32/JAMCRC) and performing a signed 8-bit shift in the loop but making the result unsigned.
+            <p id="source">
+                <a href="https://github.com/EdnessP/scripts/blob/main/burnout/GtHash.py">Py (Standalone)</a>,
+                <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/GtHash.js">JS (Live)</a>.
+        </div>
+        <form class="d-flex">
+            <input class="form-control me-2 local-hex-output" type="text" value="0xFFFFFFFF" id="bo-hash-output" readonly>
+            <input class="form-control me-1" type="text" placeholder="String input" oninput="boGtHash(this.value)">
+        </form>
+        <br>
+
+        <h3>Lingo (Tildes Birojs)</h3>
+        <p>A Latvian game of Lingo that came bundled with Tildes Birojs.
+
+        <h4>String Compression</h4>
+        <div class="info-table">
+            <p id="about">A 32-bit string compression algorithm used for storing every guessable 5 letter Latvian word in 4 bytes.<br>
+            See the source code header comment for an in-depth explanation on why exactly this was made, as obscure as it may seem.
+            <p id="indepth">The game only has a decompression routine, the compression part is my own code. It also originally was written with the assumption that the system had the Baltic Windows Codepage 1257 installed.<br>
+            To decompress, the compressed number is divided by 33, and the remainder of it is used to return a character from a long switch case of letters in the Latvian alphabet.<br>
+            To compress, a dictionary is first prepared for each used Latvian letter to correspond to the numbers 1 - 9 and letters a - w. The number 0 is used for any character not in the dictionary, all of which will be turned into the letter A. The final string is converted to an integer by treating it as a Base 33 number.
+            <p id="source">
+                <a href="https://github.com/EdnessP/scripts/blob/main/other/LingoTildeStr.py">Py (Standalone)</a>,
+                <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/LingoTildeStr.js">JS (Live)</a>.
+        </div>
+        <form class="d-flex">
+            <input class="form-control me-2 local-hex-output" type="text" value="0x00000000" oninput="lingoDecompress(this.value)" id="lingo-comp-output">
+            <input class="form-control me-1" type="text" placeholder="String input" oninput="lingoCompress(this.value)" id="lingo-decomp-output" maxlength=5>
+        </form>
+        <br>
+
+        <h3>Midnight Club</h3>
+        <p>Might apply to more early Angel Studios/Rockstar San Diego games. Confirmed for Midnight Club 2 and Midnight Club 3: DUB Edition.
+
+        <h4>Audio Lookup Hash</h4>
+        <div class="info-table">
+            <p id="about">About.
+            <p id="indepth">The string is converted to uppercase and backslashes are converted to forward slashes. For each ASCII character, the 31st bit of the hash is rolled over to the 0th position, and the character value that's multiplied by the current string index starting from 1 is added to the hash.
+            <p id="source">
+                <a href="https://github.com/EdnessP/scripts/blob/main/other/MclHash.py">Py (Standalone)</a>,
+                <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/MclHash.js">JS (Live)</a>.
+        </div>
+        <form class="d-flex">
+            <input class="form-control me-2 local-hex-output" type="text" value="0x00000000" id="mcl-hash-output" readonly>
+            <input class="form-control me-1" type="text" placeholder="String input" oninput="mclubAudioHash(this.value)">
+        </form>
+
+        <!-- Generic template
+        <br>
+        <h3>Title</h3>
+        <p>Information.
+
+        <h4>Subtitle</h4>
+        <div class="info-table">
+            <p id="about">About.
+            <p id="indepth">Indepth.
+            <p id="source">
+                <a href="">Py (Standalone)</a>,
+                <a href="">JS (Live)</a>.
+        </div>
+        <br>
+        -->
+    </div>
+</body>
+
+<script type="text/javascript" src="/localscript.js"></script>
+<script type="text/javascript" src="/live/strings/BullyHash.js"></script>
+<script type="text/javascript" src="/live/strings/GtHash.js"></script>
+<script type="text/javascript" src="/live/strings/GtID.js"></script>
+<script type="text/javascript" src="/live/strings/LingoTildeStr.js"></script>
+<script type="text/javascript" src="/live/strings/MclHash.js"></script>
+</html>

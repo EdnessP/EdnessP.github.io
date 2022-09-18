@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/localstyle.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tools & Plugins - Edness</title>
+</head>
+
+<body class="local-bg">
+    <nav id="load-nav"></nav>
+    <noscript><big><b>Warning! This site relies on JavaScript! Please enable it! The sources for all of the scripts can be viewed at <a href="https://github.com/EdnessP/EdnessP.github.io">the site's repository</a>.</b></big></noscript>
+
+    <div class="px-lg-5 pb-lg-5">
+        <h2>Tools And Plugins</h2>
+        <p>Stuff I've made at some point in time.
+        <div id="load-toc"></div>
+
+        <h3>WORK IN PROGRESS</h3>
+        This page is incomplete, there's more stuff to come!<br>
+
+        <h3>Platform Definitions</h3>
+        There are various platforms that can be listed for a plugin/script. Below is some additional information if needed.
+        <div class="info-table">
+            <p id="Noesis">For use with Rich Whitehouse's Noesis which can be downloaded from <a href="https://richwhitehouse.com/">the Projects section on their site</a>. Place the Python plugin in the <i>.\plugins\python\</i> directory.
+            <p id="Python">Standalone Python 3 script.
+            <p id="QuickBMS">For use with Luigi Auriemma's QuickBMS which can be downloaded from <a href="https://aluigi.altervista.org/">the QuickBMS section on their site</a>. Either run the executable on its own for a sort-of GUI, or run it via command line and specify the script and output path as the following two arguments.
+        </div>
+
+        <div id="tool-toc"></div>
+
+        <div class="tool-table" id="Adventure Time: Explore the Dungeon Because I Don't Know!">
+            <div class="tool-entry">
+                <p id="title">atetdbidkPAK.bms
+                <p id="platform">QuickBMS
+                <p id="source">https://github.com/EdnessP/scripts/blob/main/other/atetdbidkPAK.bms
+                <p id="additional">A script that extracts <i>Adventure Time: Explore the Dungeon Because I Don't Know!</i> PC, PS3, Wii U, Xbox 360 .PAK files.
+            </div>
+        </div>
+
+        <div class="tool-table" id="Bomberman Act:Zero">
+            <div class="tool-entry">
+                <p id="title">tex_BombermanActZero.py
+                <p id="platform">Noesis
+                <p id="source">https://github.com/EdnessP/scripts/blob/main/other/tex_BombermanActZero.py
+                <p id="additional">A texture plugin that supports <i>Bomberman Act:Zero</i> Xbox 360 .DAT and .XPR files.
+            </div>
+            <div class="tool-entry">
+                <p id="title">BombermanActZero.bms
+                <p id="platform">QuickBMS
+                <p id="source">https://github.com/EdnessP/scripts/blob/main/other/BombermanActZero.bms
+                <p id="additional">A script that extracts <i>Bomberman Act:Zero</i> Xbox 360 FILE<b>A</b>##.DAT files.
+            </div>
+            <div class="tool-entry">
+                <p id="title">BombermanActZeroFILEB0.bms
+                <p id="platform">QuickBMS
+                <p id="source">https://github.com/EdnessP/scripts/blob/main/other/BombermanActZeroFILEB0.bms
+                <p id="additional">A script that extracts the <i>Bomberman Act:Zero</i> Xbox 360 FILE<b>B0</b>.DAT file.
+            </div>
+        </div>
+
+        <div class="tool-table" id="Bully (Canis Canem Edit)">
+            <div class="tool-entry">
+                <p id="title">fmt_BullyAE.py
+                <p id="platform">Noesis
+                <p id="source">https://github.com/EdnessP/scripts/blob/main/bully/fmt_BullyAE.py
+                <p id="additional">A model and texture plugin that supports <i>Bully: Anniversary Edition</i> Android and iOS .MSH and .TEX files.
+            </div>
+            <div class="tool-entry">
+                <p id="title">BullyAE_encryption.py
+                <p id="platform">Python
+                <p id="source">https://github.com/EdnessP/scripts/blob/main/bully/BullyAE_encryption.py
+                <p id="additional">A script that encrypts and decrypts <i>Bully: Anniversary Edition</i> Android and iOS .EFF, .MTL, .WDB, .XML files. Decryption was originally rewritten from pre-existing <a href="https://forum.xentax.com/viewtopic.php?t=15777">C</a> and <a href="https://github.com/bartlomiejduda/Tools/blob/master/NEW%20Tools/Bully%20Anniversary%20Edition/Bully_XML_Tool.cpp">C++</a> reimplementations of the <tt>DecryptText</tt> function. Encryption was reimplemented from the <tt>EncryptText</tt> function.
+            </div>
+            <div class="tool-entry">
+                <p id="title">BullyAE_parse.py
+                <p id="platform">Python
+                <p id="source">https://github.com/EdnessP/scripts/blob/main/bully/BullyAE_parse.py
+                <p id="additional">A script that parses <i>Bully: Anniversary Edition</i> info strings found in various file headers and converts them to functional Python dictionaries and lists.
+            </div>
+            <div class="tool-entry">
+                <p id="title">BullyAEjumptable.bms
+                <p id="platform">QuickBMS
+                <p id="source">https://github.com/EdnessP/scripts/blob/main/bully/BullyAEjumptable.bms
+                <p id="additional">A script that exports all of the save games found in <i>Bully: Anniversary Edition</i>'s JUMPTABLE.BIN.
+            </div>
+            <div class="tool-entry">
+                <p id="title">BullyHash.py
+                <p id="platform">Python
+                <p id="source">https://github.com/EdnessP/scripts/blob/main/bully/BullyHash.py
+                <p id="additional">Python reimplementation of Bully's <tt>zipHashFile::Hash</tt> and <tt>HashUCstring</tt> functions, used for looking up audio files and string labels respectively. <a href="http://localhost:8000/live/strings.html#Bully_(Canis_Canem_Edit)">Live version</a>.
+            </div>
+            <div class="tool-entry">
+                <p id="title">BullyX360img.bms
+                <p id="platform">QuickBMS
+                <p id="source">https://github.com/EdnessP/scripts/blob/main/bully/BullyX360img.bms
+                <p id="additional">A script that supports <i>Bully: Scholarship Edition</i>'s Wii and Xbox 360 (big endian) .IMG and .DIR files. Originally written by Amzy, this is an updated version that supports XMemDecompress used by the Xbox 360 version.
+            </div>
+        </div>
+
+        <div class="tool-table" id="Burnout">
+            <div class="tool-entry">
+                <p id="title">tex_Burnout1.py
+                <p id="platform">Noesis
+                <p id="source">https://github.com/EdnessP/scripts/blob/main/burnout/tex_Burnout1.py
+                <p id="additional">A texture plugin that supports <i>Burnout</i> (<i>Heaven's Drive</i>) PS2 and Xbox .AC2, .AC3, .AC4, .DIC, .FNT, .P1W, .P2W, .PC1, .PC2, .PCF, .PSS, .PSW, .TRA files.
+            </div>
+            <div class="tool-entry">
+                <p id="title">tex_Burnout2.py
+                <p id="platform">Noesis
+                <p id="source">https://github.com/EdnessP/scripts/blob/main/burnout/tex_Burnout2.py
+                <p id="additional">A texture plugin that supports Burnout 2: Point of Impact PS2 and Xbox .DIC, .PS2, .PSS, .RCF, .RCX, .TRA files.
+            </div>
+            <div class="tool-entry">
+                <p id="title">fmt_Burnout3LRD.py
+                <p id="platform">Noesis
+                <p id="source">https://github.com/EdnessP/scripts/blob/main/burnout/fmt_Burnout3LRD.py
+                <p id="additional">A texture and archive plugin that supports <i>Burnout 3: Takedown</i>, <i>Burnout Legends</i>, <i>Burnout Revenge</i>, <i>Burnout Dominator</i> PS2, PSP, Xbox, and Xbox 360 .ARENA, .BGV, .BIN, .BTV, .DAT, .DB, .FXP, .TXD files. Also supports <i>Black</i> and <i>Need for Speed: Shift</i> (PSP) due to format similarities. <a href="https://github.com/EdnessP/scripts/raw/main/burnout/fmt_Burnout3LRD_changelog.txt">See changelog</a>.
+            </div>
+            <div class="tool-entry">
+                <p id="title">txdscanner.bms
+                <p id="platform">QuickBMS
+                <p id="source">https://github.com/EdnessP/scripts/blob/main/burnout/txdscanner.bms
+                <p id="additional">A script that scans the executables of <i>Burnout 3: Takedown</i> and <i>Burnout Legends</i> to extract the .TXD font textures.
+            </div>
+            <div class="tool-entry">
+                <p id="title">BLegendsDS.bms
+                <p id="platform">QuickBMS
+                <p id="source">https://github.com/EdnessP/scripts/blob/main/burnout/BLegendsDS.bms
+                <p id="additional">A script that decompresses <i>Burnout Legends</i> (DS) LZSS compressed files, starting with the identifiers <tt>0x12345678</tt> and <tt>0x87654321</tt>.
+            </div>
+            <div class="tool-entry">
+                <p id="title">fmt_BurnoutCRASH.py
+                <p id="platform">Noesis
+                <p id="source">https://github.com/EdnessP/scripts/blob/main/burnout/fmt_BurnoutCRASH.py
+                <p id="additional">A model and texture plugin that supports <i>Burnout CRASH!</i> PS3, Xbox 360, and iOS .CXM, .DDX, .GTF, .PVR, .PVRU files.
+            </div>
+            <div class="tool-entry">
+                <p id="title">BurnoutCRASH_BIG.bms
+                <p id="platform">QuickBMS
+                <p id="source">https://github.com/EdnessP/scripts/blob/main/burnout/BurnoutCRASH_BIG.bms
+                <p id="additional">An archive script that supports <i>Burnout CRASH!</i> PS3, Xbox 360, and iOS .BIG files. For compatibility with the Noesis plugin, the output directory should ideally be the same as the input .BIG file.
+            </div>
+            <div class="tool-entry">
+                <p id="title">BurnoutCRASH_CSVparse.py
+                <p id="platform">Python
+                <p id="source">https://github.com/EdnessP/scripts/blob/main/burnout/BurnoutCRASH_CSVparse.py
+                <p id="additional">A script that splits <i>Burnout CRASH!</i> texture sheets using their accompanying .CSV files. Requires <tt>ffmpeg_path</tt> to be set in the script with a path to the FFmpeg executable, and the texture sheets are expected to be converted to .PNG with the Noesis plugin.
+            </div>
+            <div class="tool-entry">
+                <p id="title">GtHash.py
+                <p id="platform">Python
+                <p id="source">https://github.com/EdnessP/scripts/blob/main/burnout/GtHash.py
+                <p id="additional">Python reimplementation of Burnout's <tt>CGtHash::CalculateHash</tt> function, a CRC-32 derivative used for looking up strings and variables by their hashed value. <a href="/live/strings.html#Criterion_Games">Live version</a>.
+            </div>
+            <div class="tool-entry">
+                <p id="title">GtID.py
+                <p id="platform">Python
+                <p id="source">https://github.com/EdnessP/scripts/blob/main/burnout/GtID.py
+                <p id="additional">Python reimplementation of Burnout's <tt>GtIDCompress</tt> and <tt>GtIDUnCompress</tt> functions, a string compression format that reduces strings up to 12 characters long down to 8 bytes. Used to store track and vehicle names, and file identifiers. <a href="/live/strings.html#Criterion_Games">Live version</a>.
+            </div>
+            <div class="tool-entry">
+                <p id="title">bxv_palsplit.bms
+                <p id="platform">QuickBMS
+                <p id="source">https://github.com/EdnessP/scripts/blob/main/burnout/bxv_palsplit.bms
+                <p id="additional"><b>No longer maintained &ndash; superseded by fmt_Burnout3LRD.py!</b> Its primary purpose was to split and export the interleaved and grouped PS2 texture palettes for .BGV and .BTV files.
+            </div>
+        </div>
+
+        <div class="tool-table" id="Castle Strike">
+            <div class="tool-entry">
+                <p id="title">cstrikeRDA.bms
+                <p id="platform">QuickBMS
+                <p id="source">https://github.com/EdnessP/scripts/blob/main/other/cstrikeRDA.bms
+                <p id="additional">A script that extracts <i>Castle Strike</i> PC .RDA files.
+            </div>
+        </div>
+
+        <div class="tool-table" id="Driver">
+            <div class="tool-entry">
+                <p id="title">driversf-chnk.bms
+                <p id="platform">QuickBMS
+                <p id="source">https://github.com/EdnessP/scripts/blob/main/other/driversf-chnk.bms
+                <p id="additional">A script that extracts <i>Driver: San Francisco</i> PC, PS3, Xbox 360 .DNGC, .FCHUNK, .SP files.
+            </div>
+            <div class="tool-entry">
+                <p id="title">DVO3parser.bms
+                <p id="platform">QuickBMS
+                <p id="source">https://github.com/EdnessP/scripts/blob/main/other/DVO3parser.bms
+                <p id="additional"><b>No longer maintained!</b> A script that prints float values from <i>Driver: San Francisco</i> Wii .VO3 files.
+            </div>
+        </div>
+
+        <div class="tool-table" id="The Simpsons Game">
+            <div class="tool-entry">
+                <p id="title">tex_TheSimpsonsGame_X360_itxd.py
+                <p id="platform">Noesis
+                <p id="source">https://github.com/EdnessP/scripts/blob/main/other/tex_TheSimpsonsGame_X360_itxd.py
+                <p id="additional">A texture plugin that supports <i>The Simpsons Game</i> Xbox 360 .ITXD files. Also check out the PS3 .TXD plugin <a href="https://forum.xentax.com/viewtopic.php?f=18&t=19360">over at XeNTaX</a>.
+            </div>
+            <div class="tool-entry">
+                <p id="title">TheSimpsonsGame_NewGen_LH2.py
+                <p id="platform">Python
+                <p id="source">https://github.com/EdnessP/scripts/blob/main/other/TheSimpsonsGame_NewGen_LH2.py
+                <p id="additional">A script that imports and exports <i>The Simpsons Game</i> PS3 and Xbox 360 .LH2 files. Strings must be compliant with Windows Codepage 1252!
+            </div>
+        </div>
+
+        <!-- Generic template
+        <div class="tool-table" id="Title">
+            <div class="tool-entry">
+                <p id="title">Filename
+                <p id="platform">Platform
+                <p id="source">Link
+                <p id="additional">Information
+            </div>
+        </div>
+        -->
+
+    </div>
+</body>
+
+<script type="text/javascript" src="/localscript.js"></script>
+</html>
