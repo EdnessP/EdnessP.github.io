@@ -19,7 +19,7 @@ function toHex(num, size = 8) {
     return "0x" + num.toString(16).padStart(size, "0").toUpperCase();
 }
 
-$("#load-nav").load("/navbar.html", function prepNavbar() {
+$("#load-nav").load("/internal/navbar.html", function prepNavbar() {
     let navBtn = document.getElementsByClassName("nav-link");
     for (let i = 0; i < navBtn.length; i++) {
         if (navBtn[i].pathname === window.location.pathname) {
@@ -83,6 +83,10 @@ $(".info-table").each(function populateInfoTables() {
 //////////////////////////
 //   Tools page stuff   //
 //////////////////////////
+$(".tool-entry > #title").each(function fixToolTitles() {
+    this.innerHTML = this.innerHTML.trim().replace(/ /g, "&nbsp;").replace(/-/g, "&#8209;");
+});
+
 $(".tool-entry > #source").each(function createSourceLinks() {
     let srcView = document.createElement("a");
     srcView.href = this.innerHTML.trim();
@@ -117,9 +121,10 @@ $(".tool-table").each(function populateToolTables() {
     let tblHead = tblNew.createTHead();
     let tblHeadRow = tblHead.insertRow();
     tblNew.classList.add("table");
-    tblHeadNames.forEach(tblHeadCell => {
+    tblHeadNames.forEach((tblHeadCell, idx) => {
         tblHeadTitle = tblHeadRow.insertCell();
-        tblHeadTitle.outerHTML = `<th>${tblHeadCell.replace(/ /g, "&nbsp;")}</th>`;
+        tblHeadTitle.outerHTML = // this is awful
+            `${(idx < tblHeadNames.length - 1) ? "<th class=local-min>" : "<th>"}${tblHeadCell.replace(/ /g, "&nbsp;")}</th>`;
     });
 
     //$(".tool-table > .tool-entry").each(function populateToolEntries() {
