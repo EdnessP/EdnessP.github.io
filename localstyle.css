@@ -11,6 +11,10 @@ h2 {
     font-variant: small-caps;
 }
 
+textarea {
+    resize: none;
+}
+
 .info-table th {
     vertical-align: text-top;
     text-align: right;
@@ -36,13 +40,22 @@ h2 {
 .local-hex-output {
     text-align: center;
     font-family: monospace;
-    max-width: 125px;
+    max-width: 13ch;
 }
 
 .local-hex-output-long {
     text-align: center;
     font-family: monospace;
-    max-width: 200px;
+    max-width: 21ch;
+}
+
+.local-pic-input {
+    vertical-align: text-top;
+    font-family: monospace;
+    overflow: hidden;
+    line-height: 1em;
+    max-width: 35ch;
+    height: 14em;
 }
 
 .local-min {
