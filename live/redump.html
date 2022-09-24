@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="/external/jquery.min.js"></script>
+    <link rel="stylesheet" href="/external/bootstrap.min.css">
+    <link rel="stylesheet" href="/localstyle.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Redump - Edness</title>
+</head>
+
+<body class="local-bg">
+    <nav id="load-nav"></nav>
+    <noscript><big><b>Warning! This site relies on JavaScript! Please enable it! The sources for all of the scripts can be viewed at <a href="https://github.com/EdnessP/EdnessP.github.io">the site's repository.</a></b></big></noscript>
+
+    <div class="px-lg-5 pb-lg-5">
+        <h2>Redump</h2>
+        <p>Tools related to working with data on <a href="http://redump.org/">Redump.org</a>.
+        <div id="load-toc"></div>
+
+        <h3>Permanent Information & Control</h3>
+        <p>Dumped and retrieved from Blu-Ray discs.
+
+        <div class="info-table">
+            <p id="about">Parses the Permanent Information & Control (PIC) hexdump retrieved from pressed BD-ROM discs.
+            <p id="source">
+                <a href="https://github.com/EdnessP/scripts/blob/main/other/PICparse.py">Py (Standalone)</a>,
+                <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/redump/PICparse.js">JS (Live)</a>.
+        </div>
+        <form class="d-flex">
+            <textarea class="form-control me-2 local-pic-input" type="text" placeholder="PIC data input" oninput="parsePic()" id="pic-parse-input"></textarea>
+            <textarea class="form-control me-1" type="text" placeholder="PIC data output" id="pic-parse-output" readonly></textarea>
+        </form>
+        <form>
+            <input type="checkbox" id="pic-parse-checkbox" onchange="parsePic()">
+            <label for="pic-parse-checkbox">Verbose output</label>
+            <!-- Another checkbox next to it to align the PIC to the exact size used by Redump? -->
+        </form>
+
+    </div>
+</body>
+
+<script type="text/javascript" src="/localscript.js"></script>
+<script type="text/javascript" src="/live/redump/PICparse.js"></script>
+</html>
