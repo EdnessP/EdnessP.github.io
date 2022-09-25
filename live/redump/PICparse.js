@@ -1,6 +1,6 @@
 // Parses and prints Blu-ray Permanent Information & Control (PIC) data
 
-// Written by Edness   v1.1   2022-09-25
+// Written by Edness   v1.2   2022-09-25
 
 const picMaxLength = 0xC4 * 2; // Up to triple layer pressed BDs
 
@@ -20,7 +20,7 @@ function parsePic() {
     // See the original standalone Python implementation for comments
     let totalSize = 0;
     readSeek(readStr(0x2) !== "DI" ? 0x4 : 0x0);
-    while (picPosition < picMaxLength && readStr(0x2) === "DI") {
+    while (picPosition < picData.length && readStr(0x2) === "DI") {
         readSeek(0x3, 1);
         let layer = readInt(0x1);
         let type = readStr(0x1);
