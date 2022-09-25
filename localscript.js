@@ -1,4 +1,4 @@
-// Written by Edness   2022-09-07 - 2022-09-23
+// Written by Edness   2022-09-07 - 2022-09-25
 
 function hexInput(str, size, elem) {
     const strPad = "0x" + str.slice(2, size + 2).toUpperCase().replace(/[^0-9A-F]/g, "0").padEnd(size, "0");
@@ -21,7 +21,7 @@ function toHex(num, size = 8) {
 $("#load-nav").load("/internal/navbar.html", function prepNavbar() {
     let navBtn = document.getElementsByClassName("nav-link");
     for (let i = 0; i < navBtn.length; i++) {
-        if (navBtn[i].pathname === window.location.pathname) {
+        if (navBtn[i].pathname.split("/")[1] === window.location.pathname.split("/")[1]) {
             navBtn[i].classList.add("active");
             break;
         }
@@ -186,7 +186,7 @@ function githubRawDownload(url) {
     let xhr = new XMLHttpRequest();
     xhr.responseType = "blob";
     xhr.onload = function() {
-        let a = document.createElement('a');
+        let a = document.createElement("a");
         a.href = window.URL.createObjectURL(xhr.response);
         a.download = filename;
         document.body.appendChild(a);
