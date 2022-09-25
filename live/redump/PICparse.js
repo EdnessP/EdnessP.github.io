@@ -68,7 +68,7 @@ const readInt = (bytes) => {
 }
 
 const readStr = (bytes) => {
-    str = ""
+    str = "";
     for (let i = 0; i < bytes; i++) {
         strByte = readInt(1);
         decode = String.fromCharCode(strByte);
