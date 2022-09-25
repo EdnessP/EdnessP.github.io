@@ -49,15 +49,14 @@ function parsePic() {
             ? `${identifier} - Layer ${layer} - Start: ${toHex(layerSectorStart + 2)} - End: ${toHex(layerSectorEnd)} - Size: ${toHex(layerSize)} (${layerSize} sectors, ${layerSize * 2048} bytes)\n`
             : `Layer ${layer} - Size: ${layerSize} sectors, ${layerSize * 2048} bytes\n`;
     }
-    if (totalSize !== 0) {
+    if (totalSize) {
         let actualSize = (totalSize - layerSize) + (totalSectors - layerSectorStart);
         picOutput += verbose
             ? `\nTotal size (Used): ${toHex(actualSize)} (${actualSize} sectors, ${actualSize * 2048} bytes) - Disc end: ${toHex(totalSectors + 1)}\n`
             + `Total size (Full): ${toHex(totalSize)} (${totalSize} sectors, ${totalSize * 2048} bytes)\n`
-            + `Total layers: ${totalLayers}`
             : `\nTotal size (Used): ${actualSize} sectors, ${actualSize * 2048} bytes\n`
-            + `Total size (Full): ${totalSize} sectors, ${totalSize * 2048} bytes\n`
-            + `Total layers: ${totalLayers}`;
+            + `Total size (Full): ${totalSize} sectors, ${totalSize * 2048} bytes\n`;
+        picOutput += `Total layers: ${totalLayers}`;
     }
     output.value = picOutput;
 }
