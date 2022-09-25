@@ -20,8 +20,9 @@ function toHex(num, size = 8) {
 
 $("#load-nav").load("/internal/navbar.html", function prepNavbar() {
     let navBtn = document.getElementsByClassName("nav-link");
+    let navPath = window.location.pathname.split("/")[1]
     for (let i = 0; i < navBtn.length; i++) {
-        if (navBtn[i].pathname.split("/")[1] === window.location.pathname.split("/")[1]) {
+        if (navBtn[i].pathname.split("/")[1] === navPath) {
             navBtn[i].classList.add("active");
             break;
         }
