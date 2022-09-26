@@ -1,6 +1,6 @@
 // Parses and prints Blu-ray Permanent Information & Control (PIC) data
 
-// Written by Edness   v1.2   2022-09-25
+// Written by Edness   v1.3   2022-09-25 - 2022-09-26
 
 const picMaxLength = 0xC4 * 2; // Up to triple layer pressed BDs
 
@@ -19,6 +19,7 @@ function parsePic() {
 
     // See the original standalone Python implementation for comments
     let totalSize = 0;
+    let layerBreak = [0];
     readSeek(readStr(0x2) !== "DI" ? 0x4 : 0x0);
     while (picPosition < picData.length && readStr(0x2) === "DI") {
         readSeek(0x3, 1);
@@ -44,11 +45,19 @@ function parsePic() {
         readSeek(0x20, 1);
 
         var layerSize = layerSectorEnd - layerSectorStart;
+        layerBreak.push(layerBreak.at(-1) + layerSize);
         totalSize += layerSize;
         picOutput += verbose
             ? `${identifier} - Layer ${layer} - Start: ${toHex(layerSectorStart + 2)} - End: ${toHex(layerSectorEnd)} - Size: ${toHex(layerSize)} (${layerSize} sectors, ${layerSize * 2048} bytes)\n`
             : `Layer ${layer} - Size: ${layerSize} sectors, ${layerSize * 2048} bytes\n`;
     }
+
+    layerBreak.pop();
+    layerBreak.shift();
+    if (layerBreak.length) {
+        picOutput += `Layerbreak${layerBreak.length > 1 ? "s" : ""}: ${layerBreak.join(", ")}\n`;
+    }
+
     if (totalSize) {
         let actualSize = (totalSize - layerSize) + (totalSectors - layerSectorStart);
         picOutput += verbose
