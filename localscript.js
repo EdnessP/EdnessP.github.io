@@ -1,4 +1,4 @@
-// Written by Edness   2022-09-07 - 2022-09-25
+// Written by Edness   2022-09-07 - 2022-09-27
 
 function hexInput(str, size, elem) {
     const strPad = "0x" + str.slice(2, size + 2).toUpperCase().replace(/[^0-9A-F]/g, "0").padEnd(size, "0");
@@ -16,6 +16,37 @@ function reverseString(str) {
 
 function toHex(num, size = 8) {
     return "0x" + num.toString(16).padStart(size, "0").toUpperCase();
+}
+
+// I'll be honest I never bothered to look up if JS has any native method of reading bytes like a file,
+// I just wrote this on a whim because I needed it for the Permanent Information & Control parser.
+class hexReader {
+    constructor(hexData) {
+        this.hexData = hexData;
+        this.hexPosition = 0;
+    }
+
+    readInt(bytes) {
+        return parseInt(this.hexData.slice(this.hexPosition, this.hexPosition += bytes * 2), 16);
+    }
+
+    readStr(bytes) {
+        let str = "";
+        for (let i = 0; i < bytes; i++) {
+            let strByte = this.readInt(1);
+            let decode = String.fromCharCode(strByte);
+            str += decode.match(/[\x20-\x7E]/g) ? decode : `\\${toHex(strByte, 2).slice(1)}`;
+        }
+        return str;
+    }
+
+    seek(bytes, relative = false) {
+        this.hexPosition = relative ? this.hexPosition + bytes * 2 : bytes * 2;
+    }
+
+    tell() {
+        return this.hexPosition;
+    }
 }
 
 $("#load-nav").load("/internal/navbar.html", function prepNavbar() {
