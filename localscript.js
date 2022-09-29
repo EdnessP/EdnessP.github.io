@@ -1,7 +1,7 @@
 // Written by Edness   2022-09-07 - 2022-09-27
 
 function hexInput(str, size, elem) {
-    const strPad = "0x" + str.slice(2, size + 2).toUpperCase().replace(/[^0-9A-F]/g, "0").padEnd(size, "0");
+    const strPad = `0x${str.slice(2, size + 2).toUpperCase().replace(/[^0-9A-F]/g, "0").padEnd(size, "0")}`;
     const input = document.getElementById(elem);
     let curPos = input.selectionStart; // identical to selectionEnd
     if (curPos < 2) { curPos = 2; } // force to stay after 0x
@@ -15,19 +15,19 @@ function reverseString(str) {
 }
 
 function toHex(num, size = 8) {
-    return "0x" + num.toString(16).padStart(size, "0").toUpperCase();
+    return `0x${num.toString(16).padStart(size, "0").toUpperCase()}`;
 }
 
 // I'll be honest I never bothered to look up if JS has any native method of reading bytes like a file,
 // I just wrote this on a whim because I needed it for the Permanent Information & Control parser.
-class hexReader {
+class HexReader {
     constructor(hexData) {
         this.hexData = hexData;
-        this.hexPosition = 0;
+        this.hexOffset = 0x0; // Multiplied by 2 because technically it's always reading in nibbles
     }
 
     readInt(bytes) {
-        return parseInt(this.hexData.slice(this.hexPosition, this.hexPosition += bytes * 2), 16);
+        return parseInt(this.hexData.slice(this.hexOffset, this.hexOffset += bytes * 2), 16);
     }
 
     readStr(bytes) {
@@ -41,11 +41,11 @@ class hexReader {
     }
 
     seek(bytes, relative = false) {
-        this.hexPosition = relative ? this.hexPosition + bytes * 2 : bytes * 2;
+        return this.hexOffset = (relative ? this.hexOffset : 0) + bytes * 2;
     }
 
     tell() {
-        return this.hexPosition;
+        return this.hexOffset;
     }
 }
 
