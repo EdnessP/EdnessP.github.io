@@ -9,15 +9,15 @@ function parsePic() {
     let output = document.getElementById("pic-parse-output");
     let verbose = document.querySelector("#pic-parse-verbose").checked;
 
-    let picData = input.value.toUpperCase().replace(/(\r\n|\n|\r|\s)/g, "").replace(/[^0-9A-F]/g, "0").slice(0, picMaxLength);
+    let picData = input.value.toUpperCase().replace(/(\r|\n|\s)/g, "").replace(/[^0-9A-F]/g, "0").slice(0, picMaxLength);
     let curPos = input.selectionStart;
     input.value = picData;
     input.setSelectionRange(curPos, curPos);
 
-    let pic = new hexReader(picData);
+    // See the original standalone Python implementation for comments
+    let pic = new HexReader(picData);
     let picOutput = "";
 
-    // See the original standalone Python implementation for comments
     let totalSize = 0;
     let layerBreak = [0];
     pic.seek(pic.readStr(0x2) !== "DI" ? 0x4 : 0x0);
