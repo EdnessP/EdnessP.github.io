@@ -27,7 +27,7 @@
             <p id="about">A 32-bit string hashing algorithm used for looking up audio files by their hashed labels.
             <p id="indepth">The string is converted to lowercase and backslashes are converted to forward slashes. The ASCII value of each character is added to the current hash, and the resulting value is then shifted left by 10 bits with the original resulting value also added to it. Then the current hash is XORed with the current hash that's shifted right by 6 bits.<br>
             After every character is hashed, the final hash is shifted left by 3 bits and the original resulting hash is added to it, which is then XORed with the resulting hash shifted right by 11 bits. Finally, the resulting hash is shifted left by 15 bits, and the original resulting hash is added to it again.<br>
-            This same algorithm is also used in <a href="#Midnight_Club 3: DUB Edition">Midnight Club</a>, except the string isn't converted to lowercase and backslashes remain intact.
+            This same algorithm is also used in <a href="#Midnight_Club">Midnight Club 3: DUB Edition</a>, except the string isn't converted to lowercase and backslashes remain intact.
             <p id="source">
                 <a href="https://github.com/EdnessP/scripts/blob/main/bully/BullyHash.py">Py (Standalone)</a>,
                 <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/BullyHash.js">JS (Live)</a>.
