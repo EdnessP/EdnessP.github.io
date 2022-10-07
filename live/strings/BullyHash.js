@@ -1,15 +1,22 @@
-// Written by Edness   v1.0   2022-09-08
+// Written by Edness   v1.1   2022-09-08 - 2022-10-07
 
-function bullyRstmHash(str) {
+function bullyRstmHash(str, mcl) {
     /*
-       Reimplemented from the  zipHashFile::Hash  function
+       Reimplemented from the  zipHashFile::Hash  function at  0040CDF0  in PS2 PAL
        Used for looking up RSTM audio files by their hashed names
 
        The game normally checks if it starts with a quotation mark and strips it,
        and also terminates the hash loop if/when a quotation mark is encountered.
+
+        A similar algorithm is also used in Midnight Club string tables, with the
+        main difference being not converting to lowercase and leaving backslashes
+        located at  002BE788  in Midnight Club 3: DUB Edition Remix PS2 PAL.
     */
-    const input = str.toLowerCase().replace(/\\/g, "/");
-    const output = document.getElementById("bully-rstm-output");
+
+    inOut = mcl ? [str, "mcl-str-hash-output"]
+                : [str.toLowerCase().replace(/\\/g, "/"), "bully-rstm-output"];
+    const input = inOut[0];
+    const output = document.getElementById(inOut[1]);
     let hash = new Uint32Array([0]);
     for (let i = 0; i < input.length; i++) {
         hash[0] = (hash[0] + input.charCodeAt(i)) * 0x401;
