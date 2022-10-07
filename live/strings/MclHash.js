@@ -11,7 +11,7 @@ function mclubAudioHash(str) {
        end with .STM, but for Midnight Club 3 - with .RSM
     */
     const input = str.toUpperCase().replace(/\\/g, "/");
-    const output = document.getElementById("mcl-hash-output");
+    const output = document.getElementById("mcl-audio-hash-output");
     let hash = new Uint32Array([0]);
     for (let i = 1, idx = 0; idx < input.length; i++, idx++) {
         hash[0] = (hash[0] << 1 | hash >>> 31) + input.charCodeAt(idx) * i;
