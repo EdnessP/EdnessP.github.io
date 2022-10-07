@@ -27,7 +27,7 @@
             <p id="about">A 32-bit string hashing algorithm used for looking up audio files by their hashed labels.
             <p id="indepth">The string is converted to lowercase and backslashes are converted to forward slashes. The ASCII value of each character is added to the current hash, and the resulting value is then shifted left by 10 bits with the original resulting value also added to it. Then the current hash is XORed with the current hash that's shifted right by 6 bits.<br>
             After every character is hashed, the final hash is shifted left by 3 bits and the original resulting hash is added to it, which is then XORed with the resulting hash shifted right by 11 bits. Finally, the resulting hash is shifted left by 15 bits, and the original resulting hash is added to it again.<br>
-            This same algorithm is also used in <a href="#Midnight_Club">Midnight Club</a>, except the string isn't converted to lowercase and backslashes remain intact.
+            This same algorithm is also used in <a href="#Midnight_Club 3: DUB Edition">Midnight Club</a>, except the string isn't converted to lowercase and backslashes remain intact.
             <p id="source">
                 <a href="https://github.com/EdnessP/scripts/blob/main/bully/BullyHash.py">Py (Standalone)</a>,
                 <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/BullyHash.js">JS (Live)</a>.
@@ -115,7 +115,7 @@
             <p id="about">A 32-bit string hashing algorithm used for looking up audio files by their hashed labels.
             <p id="indepth">The string is converted to uppercase and backslashes are converted to forward slashes. For each ASCII character, the 31st bit of the hash is rolled over to the 0th position, and the character value that's multiplied by the current string index starting from 1 is added to the hash.
             <p id="source">
-                <a href="https://github.com/EdnessP/scripts/blob/main/other/MclHash.py">Py (Standalone)</a>,
+                <a href="https://github.com/EdnessP/scripts/blob/main/mclub/MclHash.py">Py (Standalone)</a>,
                 <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/MclHash.js">JS (Live)</a>.
         </div>
         <form class="d-flex">
@@ -124,7 +124,21 @@
         </form>
         <br>
 
-        <h4>String Lookup Hash</h4>
+        <h4>String Lookup Hash (Midnight Club 2)</h4>
+        <div class="info-table">
+            <p id="about">A 32-bit string hashing algorithm used for looking up strings by their hashed labels.
+            <p id="indepth">For each ASCII character, the hash is shifted left by 4 bits and the value of the character is added to it. If the last nibble of the hash isn't 0, then the hash is XORed with the final nibble that's XORed with itself shifted right by 24 bits.
+            <p id="source">
+                <a href="https://github.com/EdnessP/scripts/blob/main/mclub/MclHash.py">Py (Standalone)</a>,
+                <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/MclHash.js">JS (Live)</a>.
+        </div>
+        <form class="d-flex">
+            <input class="form-control me-2 local-hex-output" type="text" value="0x00000000" id="mcl-str-hash-output" readonly>
+            <input class="form-control me-1" type="text" placeholder="String input" oninput="mclubStringHash(this.value)">
+        </form>
+        <br>
+
+        <h4>String Lookup Hash (Midnight Club 3)</h4>
         <div class="info-table">
             <p id="about">A 32-bit string hashing algorithm used for looking up strings by their hashed labels.
             <p id="indepth">The algorithm is identical to <a href="#Bully_(Canis_Canem_Edit)">Bully's audio look up hash</a>, the only thing that sets it apart is the lack of conversion to lowercase and backslashes to forward slashes.
@@ -132,7 +146,7 @@
                 <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/BullyHash.js">JS (Live)</a>.
         </div>
         <form class="d-flex">
-            <input class="form-control me-2 local-hex-output" type="text" value="0x00000000" id="mcl-str-hash-output" readonly>
+            <input class="form-control me-2 local-hex-output" type="text" value="0x00000000" id="mcl-bully-hash-output" readonly>
             <input class="form-control me-1" type="text" placeholder="String input" oninput="bullyRstmHash(this.value, 1)">
         </form>
         <br>
