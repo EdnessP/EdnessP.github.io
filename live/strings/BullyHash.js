@@ -13,7 +13,7 @@ function bullyRstmHash(str, mcl) {
         located at  002BE788  in Midnight Club 3: DUB Edition Remix PS2 PAL.
     */
 
-    inOut = mcl ? [str, "mcl-str-hash-output"]
+    inOut = mcl ? [str, "mcl-bully-hash-output"]
                 : [str.toLowerCase().replace(/\\/g, "/"), "bully-rstm-output"];
     const input = inOut[0];
     const output = document.getElementById(inOut[1]);
