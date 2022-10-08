@@ -27,7 +27,7 @@ function mclubStringHash(str) {
        Midnight Club 3's string hashing function is nearly
        identical to Bully's, just without the conversion to
        lowercase and backslashes to forward slashes, which
-       can be found at  scripts/bully/BullyHash.py
+       can be found at  /live/strings/BullyHash.js
     */
     const input = str;
     const output = document.getElementById("mcl-str-hash-output");
