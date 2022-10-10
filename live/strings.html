@@ -52,6 +52,25 @@
         </form>
         <br>
 
+        <h3>Call of Duty</h3>
+        <p>A string hashing algorithm used in Call of Duty: Finest Hour.
+
+        <h4>String Hashing</h4>
+        <div class="info-table">
+            <p id="about">A 64-bit string hashing algorithm used to store filenames in the Spark Pack in Call of Duty: Finest Hour.
+            <p id="indepth">This is a more simplified implementation than what's used in-game, likely due to originally being written for 32-bit processors.<br>
+            The string is converted to uppercase and forward slashes are converted to back slashes, and the initial hash seed is set to 9521211207457086692. For each ASCII character, the value of the character is XORed to the current hash shifted left by 40 bits (originally shifted left by 31 bits and then multiplied by 512), to which the current hash that's multiplied by 435 is then added.<br>
+            There is also a secondary loop break condition if the current character in the string contains a semicolon.
+            <p id="source">
+                <a href="https://github.com/EdnessP/scripts/blob/main/cod/codfh_hash.py">Py (Standalone)</a>,
+                <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/codfh_hash.js">JS (Live)</a>.
+        </div>
+        <form class="d-flex">
+            <input class="form-control me-2 local-hex-output-long" type="text" value="0x84222325CBF29CE4" oninput="boDecompGtID(this.value)" id="codfh-hash-output" readonly>
+            <input class="form-control me-1" type="text" placeholder="String input" oninput="codfhSparkHash(this.value)">
+        </form>
+        <br>
+
         <h3>Criterion Games</h3>
         <p>A string compression and hashing algorithm used in Burnout 3: Takedown, Legends, Revenge, Dominator, Black, and Need for Speed: Shift (PSP).
 
@@ -188,6 +207,7 @@
 
 <script type="text/javascript" src="/localscript.js"></script>
 <script type="text/javascript" src="/live/strings/BullyHash.js"></script>
+<script type="text/javascript" src="/live/strings/codfh_hash.js"></script>
 <script type="text/javascript" src="/live/strings/GtHash.js"></script>
 <script type="text/javascript" src="/live/strings/GtID.js"></script>
 <script type="text/javascript" src="/live/strings/LingoTildeStr.js"></script>
