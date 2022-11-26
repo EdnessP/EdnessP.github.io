@@ -1,5 +1,6 @@
 /*
   Tomb Raider: Legend filename hashing algorithm
+
   Reimplemented from the function at  0009AF00  in
   the Xbox 2005-12-08 pre-release build executable
   and the function at  001A19C0  in the PS2 PAL elf
