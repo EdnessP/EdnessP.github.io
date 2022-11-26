@@ -187,6 +187,22 @@
             <input class="form-control me-1" type="text" placeholder="String input" oninput="tsgHash(this.value)">
         </form>
 
+        <h3>Tomb Raider</h3>
+        <p>String hashing algorithm used in Tomb Raider: Legend, and possibly other games.
+
+        <h4>String Hashing</h4>
+        <div class="info-table">
+            <p id="about">A 32-bit string hashing algorithm used for looking up files by their hashed filenames.
+            <p id="indepth">The string is converted to lower case, and the initial hash is set to -1. For each character, the hash is XORed by the ASCII value of the character shifted left by 24 bits. Then, if the hash is a negative number, it's added to itself, to which the result is XORed with 79764919, otherwise the hash is shifted left by 1 bit, and this entire process is repeated 8 times. Finally, the hash is NORed.
+            <p id="source">
+                <a href="https://github.com/EdnessP/scripts/blob/main/other/TRLegendHash.py">Py (Standalone)</a>,
+                <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/TRLegendHash.js">JS (Live)</a>.
+        </div>
+        <form class="d-flex">
+            <input class="form-control me-2 local-hex-output" type="text" value="0x00000000" id="tr-legend-hash-output" readonly>
+            <input class="form-control me-1" type="text" placeholder="String input" oninput="trLegendHash(this.value)">
+        </form>
+
         <!-- Generic template
         <br>
         <h3>Title</h3>
@@ -212,5 +228,6 @@
 <script type="text/javascript" src="/live/strings/GtID.js"></script>
 <script type="text/javascript" src="/live/strings/LingoTildeStr.js"></script>
 <script type="text/javascript" src="/live/strings/MclHash.js"></script>
+<script type="text/javascript" src="/live/strings/TRLegendHash.js"></script>
 <script type="text/javascript" src="/live/strings/tsg_hash.js"></script>
 </html>
