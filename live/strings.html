@@ -58,7 +58,7 @@
             <p id="about">A 64-bit string hashing algorithm used to store filenames in the Spark Pack in Call of Duty: Finest Hour.
             <p id="indepth">
             The string is converted to uppercase and forward slashes are converted to backslashes, and the initial hash seed is set to 9521211207457086692. For each ASCII character, the value of the character is XORed to the current hash shifted left by 40 bits, to which the current hash that's multiplied by 435 is then added. There is also a secondary loop break condition if the current character in the string contains a semicolon.<br>
-            In short, this is a 64-bit FNV-1 hash implementation with the offset basis' upper and lower halves swapped.
+            In other words, this is a 64-bit FNV-1 hash reimplementation with the offset basis' upper and lower halves swapped.
             <p id="source">
                 <a href="https://github.com/EdnessP/scripts/blob/main/cod/codfh_hash.py">Py (Standalone)</a>,
                 <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/codfh_hash.js">JS (Live)</a>.
