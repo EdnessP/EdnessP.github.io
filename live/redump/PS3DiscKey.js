@@ -12,7 +12,7 @@ function keyArrToInt(keyArr) {
 }
 
 function keyIntToArr(keyInt) {
-    let key = new Uint8Array(32);
+    let key = new Uint8Array(16);
     for (i = 15; i >= 0; i--) {
         key[i] = Number(keyInt & 0xFFn);
         keyInt >>= 8n;
