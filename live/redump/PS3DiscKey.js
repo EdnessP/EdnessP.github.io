@@ -29,14 +29,14 @@ function keyStrToArr(keyStr) {
     return keyIntToArr(key);
 }
 
-function decryptDkey(input) {
+async function decryptDkey(input) {
     let dKey = keyStrToArr(input);
     let data1 = await window.crypto.subtle.decrypt(data1IvType, data1KeyType, dKey);
     let output = keyArrToInt(new Uint8Array(data1, 0, 16));
     return output;
 }
 
-function encryptDkey(input) {
+async function encryptDkey(input) {
     let data1 = keyStrToArr(input);
     let dKey = await window.crypto.subtle.encrypt(data1IvType, data1KeyType, data1);
     let output = keyArrToInt(new Uint8Array(dKey, 0, 16));
