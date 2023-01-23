@@ -47,6 +47,9 @@ const data1Key = keyIntToArr(0x380BCF0B53455B3C7817AB4FA3BA90EDn);
 const data1Iv = keyIntToArr(0x69474772AF6FDAB342743AEFAA186287n);
 
 const data1IvType = {name: "AES-CBC", iv: data1Iv};
-const data1KeyType = await window.crypto.subtle.importKey(
-    "raw", data1Key, {name: "AES-CBC"}, true, ["encrypt", "decrypt"]
-);
+const data1KeyType = await (async () => {
+    const data1KeyType = await window.crypto.subtle.importKey(
+        "raw", data1Key, {name: "AES-CBC"}, true, ["encrypt", "decrypt"]
+    );
+    return data1KeyType;
+})();
