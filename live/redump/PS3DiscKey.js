@@ -11,8 +11,8 @@ function keyArrToInt(keyArr) {
     return key;
 }
 
-function keyIntToArr(keyInt, arrLen) {
-    let key = new Uint8Array(arrLen);
+function keyIntToArr(keyInt) {
+    let key = new Uint8Array(16);
     for (i = 15; i >= 0; i--) {
         key[i] = Number(keyInt & 0xFFn);
         keyInt >>= 8n;
@@ -20,25 +20,26 @@ function keyIntToArr(keyInt, arrLen) {
     return key;
 }
 
-function keyStrToArr(keyStr, arrLen) {
+function keyStrToArr(keyStr) {
     let key = 0n;
     key |= BigInt(parseInt(keyStr.slice(0, 10), 16)) << 96n;
     key |= BigInt(parseInt(keyStr.slice(10, 18), 16)) << 64n;
     key |= BigInt(parseInt(keyStr.slice(18, 26), 16)) << 32n;
     key |= BigInt(parseInt(keyStr.slice(26, 34), 16));
-    return keyIntToArr(key, arrLen);
+    return keyIntToArr(key);
 }
 
 async function decryptDkey(input) {
-    const dKey = keyStrToArr(input, 32);
+    const dKey = keyStrToArr(input);
     const data1KeyType = await data1KeySetup();
+    // WHY DOES THIS NOT WORK ??? ??? ??? ??? ???
     const data1 = await window.crypto.subtle.decrypt(data1IvType, data1KeyType, dKey);
     const output = keyArrToInt(new Uint8Array(data1, 0, 16));
     console.log(output);
 }
 
 async function encryptDkey(input) {
-    const data1 = keyStrToArr(input, 16);
+    const data1 = keyStrToArr(input);
     console.log(data1);
     const data1KeyType = await data1KeySetup();
     const dKey = await window.crypto.subtle.encrypt(data1IvType, data1KeyType, data1);
