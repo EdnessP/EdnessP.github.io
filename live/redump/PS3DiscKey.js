@@ -30,16 +30,20 @@ function keyStrToArr(keyStr) {
 }
 
 async function decryptDkey(input) {
-    let dKey = keyStrToArr(input);
-    let data1 = await window.crypto.subtle.decrypt(data1IvType, data1KeyType, dKey);
-    let output = keyArrToInt(new Uint8Array(data1, 0, 16));
+    const dKey = keyStrToArr(input);
+    const data1KeyType = await data1KeySetup();
+    const data1 = await window.crypto.subtle.decrypt(data1IvType, data1KeyType, dKey);
+    const output = keyArrToInt(new Uint8Array(data1, 0, 16));
+    console.log(output);
     return output;
 }
 
 async function encryptDkey(input) {
-    let data1 = keyStrToArr(input);
-    let dKey = await window.crypto.subtle.encrypt(data1IvType, data1KeyType, data1);
-    let output = keyArrToInt(new Uint8Array(dKey, 0, 16));
+    const data1 = keyStrToArr(input);
+    const data1KeyType = await data1KeySetup();
+    const dKey = await window.crypto.subtle.encrypt(data1IvType, data1KeyType, data1);
+    const output = keyArrToInt(new Uint8Array(dKey, 0, 16));
+    console.log(output);
     return output;
 }
 
@@ -52,4 +56,3 @@ async function data1KeySetup() {
         "raw", data1Key, {name: "AES-CBC"}, true, ["encrypt", "decrypt"]
     );
 }
-const data1KeyType = await data1KeySetup();
