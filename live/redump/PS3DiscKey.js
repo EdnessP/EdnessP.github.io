@@ -1,6 +1,6 @@
 // PS3 Data1 <-> DiscKey AES-128 CBC encryption routine
-// Information based on publicly available information!
-// Written by Edness   v1.0   2023-01-23
+// Script is based on publicly available information!
+// Written by Edness   v1.1   2023-01-23 - 2023-01-27
 
 function keyArrToInt(keyArr) {
     let key = 0n;
@@ -29,20 +29,25 @@ function keyStrToArr(keyStr, arrLen = 16) {
     return keyIntToArr(key, arrLen);
 }
 
-async function decryptDkey(input) {
+async function decryptDkey(str) {
+    const input = hexInput(str, 32, "ps3-disc-key");
+    const output = document.getElementById("ps3-data1");
     const dKey = keyStrToArr(input, 32).buffer;
     const data1KeyType = await data1KeySetup();
-    const data1 = await window.crypto.subtle.decrypt(data1IvType, data1KeyType, dKey);
-    const output = keyArrToInt(new Uint8Array(data1, 0, 16));
-    console.log(toHex(output, 32));
+    // I can't for the life of me figure out why this doesn't work...
+    let data1 = await window.crypto.subtle.decrypt(data1IvType, data1KeyType, dKey);
+    data1 = keyArrToInt(new Uint8Array(data1, 0, 16));
+    output.value = toHex(data1, 32);
 }
 
-async function encryptDkey(input) {
+async function encryptDkey(str) {
+    const input = hexInput(str, 32, "ps3-data1");
+    const output = document.getElementById("ps3-disc-key");
     const data1 = keyStrToArr(input);
     const data1KeyType = await data1KeySetup();
-    const dKey = await window.crypto.subtle.encrypt(data1IvType, data1KeyType, data1);
-    const output = keyArrToInt(new Uint8Array(dKey, 0, 16));
-    console.log(toHex(output, 32));
+    let dKey = await window.crypto.subtle.encrypt(data1IvType, data1KeyType, data1);
+    dKey = keyArrToInt(new Uint8Array(dKey, 0, 16));
+    output.value = toHex(dKey, 32);
 }
 
 const data1Key = keyIntToArr(0x380BCF0B53455B3C7817AB4FA3BA90EDn);
