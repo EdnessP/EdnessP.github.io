@@ -37,6 +37,26 @@
             <label for="pic-parse-verbose">Verbose output</label>
             <!-- Another checkbox next to it to align the PIC to the exact size used by Redump? -->
         </form>
+        <br>
+
+        <h3>PlayStation 3 Disc Key</h3>
+        <p>Dumped and retrieved from PlayStation 3 discs.
+
+        <div class="info-table">
+            <p id="about">Converts PlayStation 3 Data1 to and from the Disc Key used for decrypting the disc sectors.<br>
+                <b>NOTICE!</b> Currently only encrypting Data1 to Disc Key is functional, HTTPS' provided SubtleCrypto's decryption doesn't seem to function! Due to be rewritten!
+            <p id="source">
+                <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/redump/PS3DiscKey.js">JS (Live)</a>.
+        </div>
+        <form style="float: left;" class="me-2">
+            <h5>Data1</h5>
+            <input class="form-control local-hex-output-128" type="text" value="0x00000000000000000000000000000000" oninput="encryptDkey(this.value)" id="ps3-data1"></input>
+        </form>
+        <form style="float: left;" class="me-1">
+            <h5>Disc Key</h5>
+            <input class="form-control local-hex-output-128" type="text" value="0xE855C9AF3B8BE026FD97A7CAD9C3F890" oninput="decryptDkey(this.value)" id="ps3-disc-key"></input>
+        </form>
+        <br><br><br>
 
     </div>
 </body>
