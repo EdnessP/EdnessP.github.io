@@ -1,4 +1,4 @@
-// Written by Edness   2022-09-07 - 2022-09-27
+// Written by Edness   2022-09-07 - 2023-01-26
 
 function hexInput(str, size, elem) {
     const strPad = `0x${str.replace(/\s/g, "").slice(2, size + 2).toUpperCase().replace(/[^0-9A-F]/g, "0").padEnd(size, "0")}`;
