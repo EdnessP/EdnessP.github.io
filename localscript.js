@@ -1,7 +1,7 @@
 // Written by Edness   2022-09-07 - 2022-09-27
 
 function hexInput(str, size, elem) {
-    const strPad = `0x${str.slice(2, size + 2).toUpperCase().replace(/[^0-9A-F]/g, "0").padEnd(size, "0")}`;
+    const strPad = `0x${str.replace(/\s/g, "").slice(2, size + 2).toUpperCase().replace(/[^0-9A-F]/g, "0").padEnd(size, "0")}`;
     const input = document.getElementById(elem);
     let curPos = input.selectionStart; // identical to selectionEnd
     if (curPos < 2) { curPos = 2; } // force to stay after 0x
