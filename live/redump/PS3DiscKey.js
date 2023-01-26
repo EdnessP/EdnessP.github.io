@@ -1,5 +1,5 @@
 // PS3 Data1 <-> DiscKey AES-128 CBC encryption routine
-// Script is based on publicly available information!
+// Script is based on publicly available information from the PS3 Dev Wiki!
 // Written by Edness   v1.2   2023-01-23 - 2023-01-26
 
 function keyArrToInt(keyArr) {
@@ -62,10 +62,10 @@ async function data1KeySetup() {
 
 /* 
  * Let me tell you about the unimaginable brain damage I obtained from writing
- * this.  More specifically the  crypto.subtle.decrypt  call which for a good 
+ * this.  More specifically the  crypto.subtle.decrypt  call, which for a good
  * while I thought was bugged and non-functioning, until by complete accident
- * I noticed that every number where the last byte is specifically 0xB0 would 
- * actually work.  At this stage I had it written to pad the buffer to 256bit.
+ * I noticed that every number where the last byte is specifically 0xB0 would
+ * actually work.  At this stage I had it written to pad to a 256-bit buffer.
  * If it had any other value, I would simply get a completely useless error in
  * the console that read  "Uncaught (in promise) DOMException: The operation
  * failed for an operation-specific reason"  and had me losing my mind for days
