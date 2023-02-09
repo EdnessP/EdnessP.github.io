@@ -176,7 +176,7 @@
 
         <h4>String Hashing</h4>
         <div class="info-table">
-            <p id="about">A 32-bit string hashing algorithm used for looking up strings by their hashed labels.
+            <p id="about">A 32-bit string hashing algorithm used for looking up files by their hashed filenames.
             <p id="indepth">The string is converted to lower case. For each character, the hash is multiplied by 65599, to which the ASCII value of the character is then added.
             <p id="source">
                 <a href="https://github.com/EdnessP/scripts/blob/main/simpsons-game/tsg_hash.py">Py (Standalone)</a>,
@@ -185,6 +185,26 @@
         <form class="d-flex">
             <input class="form-control me-2 local-hex-output" type="text" value="0x00000000" id="tsg-hash-output" readonly>
             <input class="form-control me-1" type="text" placeholder="String input" oninput="tsgHash(this.value)">
+        </form>
+        <br>
+
+        <h3>The Sims (Console)</h3>
+        <p>Might apply to other Edge of Reality and/or Maxis developed titles.
+
+        <h4>String Hashing</h4>
+        <div class="info-table">
+            <p id="about">A 32-bit string hashing algorithm used for looking up files by their hashed filenames.
+            <p id="indepth">The algorithm used is plain CRC-32, but the string is converted to uppercase and any character with the ASCII value of 1 to 47 is converted to an underscore. These string changes apply to The Sims 1 PS2 console. The string changes for all the other Sims 1, 2, 3 (Wii), and Urbz console games are the same, but with the additional change of adding an extra underscore at the start of the string if it starts with a number.
+            <p id="source">
+                <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/SimsConsoleHash.js">JS (Live)</a>.
+        </div>
+        <form class="d-flex">
+            <input class="form-control me-2 local-hex-output" type="text" value="0x00000000" id="simsc-hash-output" readonly>
+            <input class="form-control me-1" type="text" placeholder="String input" id="simsc-hash-input" oninput="simsConsoleHash()">
+        </form>
+        <form>
+            <input type="checkbox" id="sims1c-hash-toggle" onchange="simsConsoleHash()">
+            <label for="sims1c-hash-toggle">The Sims 1 PS2 hash variant</label>
         </form>
         <br>
 
@@ -223,12 +243,15 @@
 </body>
 
 <script type="text/javascript" src="/localscript.js"></script>
+<script type="text/javascript" src="/live/strings/CRC32.js"></script>
+
 <script type="text/javascript" src="/live/strings/BullyHash.js"></script>
 <script type="text/javascript" src="/live/strings/codfh_hash.js"></script>
 <script type="text/javascript" src="/live/strings/GtHash.js"></script>
 <script type="text/javascript" src="/live/strings/GtID.js"></script>
 <script type="text/javascript" src="/live/strings/LingoTildeStr.js"></script>
 <script type="text/javascript" src="/live/strings/MclHash.js"></script>
+<script type="text/javascript" src="/live/strings/SimsConsoleHash.js"></script>
 <script type="text/javascript" src="/live/strings/TRLegendHash.js"></script>
 <script type="text/javascript" src="/live/strings/tsg_hash.js"></script>
 </html>
