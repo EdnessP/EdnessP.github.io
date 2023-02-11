@@ -1,6 +1,7 @@
 // Sims Console filename lookup hash
 
-// Written by Edness   v1.0   2023-02-09
+// Written by Edness  v1.1
+// 2023-02-09 - 2023-02-11
 
 function simsConsoleHash() {
     let input = document.getElementById("simsc-hash-input").value.toUpperCase().replace(/[^0-9A-Z]/g, "_");
