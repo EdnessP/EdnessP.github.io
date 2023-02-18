@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/localstyle.css">
     <meta charset="UTF-8">
     <meta content="String Manipulation" property="og:title">
-    <meta content="Various string hashing and compression algorithms reverse engineered from games" property="og:description">
+    <meta content="Various string hashing, compression and encryption algorithms reverse engineered from games" property="og:description">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>String Manipulation - Edness</title>
 </head>
@@ -18,7 +18,7 @@
 
     <div class="px-lg-5 pb-lg-5">
         <h2>String Manipulation</h2>
-        <p>Various string hashing and compression algorithms reverse engineered from games.
+        <p>Various string hashing, compression and encryption algorithms reverse engineered from games.
         <div id="load-toc"></div>
 
         <h3>Bully (Canis Canem Edit)</h3>
@@ -49,6 +49,19 @@
         <form class="d-flex">
             <input class="form-control me-2 local-hex-output" type="text" value="0x00000000" id="bully-label-output" readonly>
             <input class="form-control me-1" type="text" placeholder="String input" oninput="bullyLabelHash(this.value)">
+        </form>
+        <br>
+
+        <h4>String Encryption</h4>
+        <div class="info-table">
+            <p id="about">A string encryption algorithm used for masking the .EFF, .MTL, .WDB, .XML files in Bully: Anniversary Edition.
+            <p id="source">
+                <a href="https://github.com/EdnessP/scripts/blob/main/bully/BullyAE_encryption.py">Py (Standalone)</a>,
+                <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/BullyAE_encryption.js">JS (Live)</a>.
+        </div>
+        <form class="d-flex">
+            <textarea class="form-control me-2 local-textinput" type="text" placeholder="Encrypted string" id="bullyae-encrypted" oninput="aeDecrypt(this.value)"></textarea>
+            <textarea class="form-control me-1 local-textinput" type="text" placeholder="Decrypted string" id="bullyae-decrypted" oninput="aeEncrypt(this.value)"></textarea>
         </form>
         <br>
 
@@ -248,6 +261,7 @@
 <script type="text/javascript" src="/live/strings/CRC32.js"></script>
 
 <script type="text/javascript" src="/live/strings/BullyHash.js"></script>
+<script type="text/javascript" src="/live/strings/BullyAE_encryption.js"></script>
 <script type="text/javascript" src="/live/strings/codfh_hash.js"></script>
 <script type="text/javascript" src="/live/strings/GtHash.js"></script>
 <script type="text/javascript" src="/live/strings/GtID.js"></script>

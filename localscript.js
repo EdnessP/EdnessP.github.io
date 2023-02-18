@@ -1,5 +1,6 @@
-// Written by Edness   2022-09-07 - 2023-01-26
+// Written by Edness   2022-09-07 - 2023-02-18
 
+// Largely Live page stuff
 function hexInput(str, size, elem) {
     const strPad = `0x${str.replace(/\s/g, "").slice(2, size + 2).toUpperCase().replace(/[^0-9A-F]/g, "0").padEnd(size, "0")}`;
     const input = document.getElementById(elem);
@@ -10,12 +11,38 @@ function hexInput(str, size, elem) {
     return strPad;
 }
 
-function reverseString(str) {
-    return str.split("").reverse().join("");
-}
-
 function toHex(num, size = 8) {
     return `0x${num.toString(16).padStart(size, "0").toUpperCase()}`;
+}
+
+/*
+// I originally didn't realise TextEncoder had a separate method that automatically
+// allocates a large enough buffer, so I wrote this whole thing to work around it...
+function strInput(str, nullTerminate = false) {
+    const strArr = new Uint8Array(str.length * 3 + 1);
+    const textEncoder = new TextEncoder();
+    textEncoder.encodeInto(str, strArr);
+    //while (strArr.at(nullTerminate ? -2 : -1) === 0) {
+    //    strArr.pop(); // can't use .pop() on Uint8Array
+    //}
+    for (var idx = strArr.length - 1; idx >= 0; idx--) {
+        if (strArr[idx] !== 0) {
+            break;
+        }
+    }
+    return strArr.slice(0, idx + (nullTerminate ? 2 : 1));
+}*/
+
+function strInput(str) {
+    return new TextEncoder().encode(str);
+}
+
+function toStr(strArr) {
+    return new TextDecoder().decode(strArr);
+}
+
+function reverseString(str) {
+    return str.split("").reverse().join("");
 }
 
 // I'll be honest I never bothered to look up if JS has any native method of reading bytes like a file,

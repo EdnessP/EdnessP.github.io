@@ -1,4 +1,4 @@
-// Written by Edness   v1.1   2022-09-08 - 2022-10-07
+// Written by Edness   v1.2   2022-09-08 - 2023-02-18
 
 function bullyRstmHash(str, mcl) {
     /*
@@ -15,11 +15,11 @@ function bullyRstmHash(str, mcl) {
 
     inOut = mcl ? [str, "mcl-bully-hash-output"]
                 : [str.toLowerCase().replace(/\\/g, "/"), "bully-rstm-output"];
-    const input = inOut[0];
+    const input = strInput(inOut[0]);
     const output = document.getElementById(inOut[1]);
     let hash = new Uint32Array([0]);
     for (let i = 0; i < input.length; i++) {
-        hash[0] = (hash[0] + input.charCodeAt(i)) * 0x401;
+        hash[0] = (hash[0] + input[i]) * 0x401;
         hash[0] ^= (hash[0] >>> 6);
     }
     hash[0] *= 9;
@@ -30,11 +30,11 @@ function bullyRstmHash(str, mcl) {
 function bullyLabelHash(str) {
     // Reimplemented from the  HashUCstring & HashStringJS  functions
     // Used for looking up strings by their hashed labels
-    const input = str.toUpperCase();
+    const input = strInput(str.toUpperCase());
     const output = document.getElementById("bully-label-output");
     let hash = 0x00000000;
     for (let i = 0; i < input.length; i++) {
-        hash = input.charCodeAt(i) + hash * 0x83 & 0x7FFFFFFF;
+        hash = input[i] + hash * 0x83 & 0x7FFFFFFF;
     }
     output.value = toHex(hash);
 }

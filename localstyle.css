@@ -85,6 +85,10 @@ textarea {
     max-width: 11ch;
 }
 
+.local-textinput {
+    height: 20em;
+}
+
 .local-pic-input {
     vertical-align: text-top;
     font-family: monospace;

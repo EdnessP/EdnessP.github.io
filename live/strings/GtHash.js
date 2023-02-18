@@ -6,13 +6,14 @@
    unsigned integer after it as the final output.
 */
 
-// Written by Edness   v1.0   2022-09-09
+// Written by Edness   v1.1   2022-09-09 - 2023-02-18
 
 function boGtHash(str) {
+    const input = strInput(str);
     const output = document.getElementById("bo-hash-output");
     let hash = new Uint32Array([-1]);
-    for (let i = 0; i < str.length; i++) {
-        hash[0] = hash[0] >> 8 ^ crcHashTable[str.charCodeAt(i) ^ hash[0] & 0xFF];
+    for (let i = 0; i < input.length; i++) {
+        hash[0] = hash[0] >> 8 ^ crcHashTable[input[i] ^ hash[0] & 0xFF];
     }
     output.value = toHex(hash[0]);
 }
