@@ -14,7 +14,7 @@ function mclubAudioHash(str) {
     const output = document.getElementById("mcl-audio-hash-output");
     let hash = new Uint32Array([0]);
     for (let i = 1, idx = 0; idx < input.length; i++, idx++) {
-        hash[0] = (hash[0] << 1 | hash >>> 31) + input[idx] * i;
+        hash[0] = (hash[0] << 1 | hash[0] >>> 31) + input[idx] * i;
     }
     output.value = toHex(hash[0]);
 }
