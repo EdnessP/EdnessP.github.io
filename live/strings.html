@@ -40,7 +40,7 @@
 
         <h4>Label Lookup Hash</h4>
         <div class="info-table">
-            <p id="about">A 32-bit string hashing algorithm used for looking up text by their hashed labels.
+            <p id="about">A 31-bit string hashing algorithm used for looking up text by their hashed labels.
             <p id="indepth">The string is first converted to upper case. For each ASCII character, the current hash is multiplied by 131 and the character value is added to it, and the 31st bit is then masked out.
             <p id="source">
                 <a href="https://github.com/EdnessP/scripts/blob/main/bully/BullyHash.py">Py (Standalone)</a>,
@@ -158,7 +158,7 @@
 
         <h4>String Lookup Hash (Midnight Club 2)</h4>
         <div class="info-table">
-            <p id="about">A 32-bit string hashing algorithm used for looking up strings by their hashed labels.
+            <p id="about">A 28-bit string hashing algorithm used for looking up strings by their hashed labels.
             <p id="indepth">For each ASCII character, the hash is shifted left by 4 bits and the value of the character is added to it. If the last nibble of the hash isn't 0, then the hash is XORed with the final nibble that's XORed with itself shifted right by 24 bits.
             <p id="source">
                 <a href="https://github.com/EdnessP/scripts/blob/main/midnight-club/MclHash.py">Py (Standalone)</a>,
