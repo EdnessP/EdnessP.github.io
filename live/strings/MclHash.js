@@ -1,5 +1,5 @@
 // Midnight Club STMA/RSTM and string lookup hashing functions
-// Written by Edness   v1.2   2022-09-10 - 2023-02-18
+// Written by Edness   v1.2.1   2022-09-10 - 2023-02-23
 
 function mclubAudioHash(str) {
     /*
