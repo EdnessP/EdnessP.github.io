@@ -1,6 +1,6 @@
 // Parses and prints Blu-ray Permanent Information & Control (PIC) data
 
-// Written by Edness   v1.4   2022-09-25 - 2023-02-13
+// Written by Edness   v1.4.1   2022-09-25 - 2023-02-27
 
 const picMaxLength = 0xC4 * 2; // Up to triple layer pressed BDs
 
@@ -61,7 +61,7 @@ function parsePic() {
     layerbreak.pop();
     layerbreak.shift();
     if (layerbreak.length) {
-        picOutput += `layerbreak${layerbreak.length > 1 ? "s" : ""}: ${layerbreak.join(", ")}\n`;
+        picOutput += `Layerbreak${layerbreak.length > 1 ? "s" : ""}: ${layerbreak.join(", ")}\n`;
     }
 
     if (totalSize) {
