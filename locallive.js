@@ -1,5 +1,18 @@
 // Written by Edness   2022-09-07 - 2023-02-27
 
+function toInt(hexStr) {
+    const input = hexStr.startsWith("0x") ? hexStr.slice(2) : hexStr;
+    if (input.length <= 12) { // limit is 1<<53, but using 1<<48 just because
+        return parseInt(input, 16);
+    }
+    let output = 0n;
+    for (var idx = input.length, shift = 0n; idx > 12; idx -= 12, shift += 48n) {
+        output |= BigInt(parseInt(input.slice(idx - 12, idx), 16)) << shift;
+    }
+    output |= BigInt(parseInt(input.slice(0, idx), 16)) << shift;
+    return output;
+}
+
 function hexInput(str, size, elem) {
     const strPad = `0x${str.replace(/\s/g, "").slice(2, size + 2).toUpperCase().replace(/[^0-9A-F]/g, "0").padEnd(size, "0")}`;
     const input = document.getElementById(elem);
@@ -12,19 +25,6 @@ function hexInput(str, size, elem) {
 
 function toHex(num, size = 8) {
     return `0x${num.toString(16).padStart(size, "0").toUpperCase()}`;
-}
-
-function toInt(hexStr) {
-    const input = hexStr.startsWith("0x") ? hexStr.slice(2) : hexStr;
-    if (input.length <= 12) { // limit is 1<<53, but using 1<<48 just because
-        return parseInt(input, 16);
-    }
-    let output = 0n;
-    for (var idx = input.length, shift = 0n; idx > 12; idx -= 12, shift += 48n) {
-        output |= BigInt(parseInt(input.slice(idx - 12, idx), 16)) << shift;
-    }
-    output |= BigInt(parseInt(input.slice(0, idx), 16)) << shift;
-    return output;
 }
 
 /*
