@@ -2,7 +2,7 @@
 // and  GtIDUnCompress  functions - an 8 byte compressed format for strings up
 // to 12 characters long using upper-case alphanumeric symbols.
 
-// Written by Edness   v1.0   2022-09-09
+// Written by Edness   v1.1   2022-09-09 - 2023-02-27
 
 const boCharSize = 12;
 
@@ -26,11 +26,8 @@ function boCompGtID(str) {
 }
 
 function boDecompGtID(str) {
-    const strPad = hexInput(str, 16, "bo-id-comp-output");
+    const input = new BigUint64Array([hexInput(str, 16, "bo-id-comp-output")]);
     const output = document.getElementById("bo-id-decomp-output");
-    const input = new BigUint64Array([0n]); // Why must this be such a pain in JS...
-    input[0] |= BigInt(parseInt(strPad.slice(0, 10))) << 32n;
-    input[0] |= BigInt(parseInt("0x" + strPad.slice(10, 18)));
     let string = "";
     for (let i = 0; i < boCharSize; i++) {
         string += boChars[input[0] % BigInt(boChars.length)];

@@ -1,6 +1,6 @@
 // PS3 Data1 <-> DiscKey AES-128 CBC encryption routine
-// Script is based on publicly available information from the PS3 Dev Wiki!
-// Written by Edness   v1.2   2023-01-23 - 2023-01-26
+// Script is based on publicly available information from the PS3 Dev Wiki
+// Written by Edness   v1.3   2023-01-23 - 2023-02-27
 
 function keyArrToInt(keyArr) {
     let key = 0n;
@@ -20,32 +20,21 @@ function keyIntToArr(keyInt, arrLen = 16) {
     return key;
 }
 
-function keyStrToArr(keyStr, arrLen = 16) {
-    let key = 0n;
-    key |= BigInt(parseInt(keyStr.slice(0, 10), 16)) << 96n;
-    key |= BigInt(parseInt(keyStr.slice(10, 18), 16)) << 64n;
-    key |= BigInt(parseInt(keyStr.slice(18, 26), 16)) << 32n;
-    key |= BigInt(parseInt(keyStr.slice(26, 34), 16));
-    return keyIntToArr(key, arrLen);
-}
-
 async function decryptDkey(str) {
-    const input = hexInput(str, 32, "ps3-disc-key");
+    const input = keyIntToArr(hexInput(str, 32, "ps3-disc-key"), 64);
     const output = document.getElementById("ps3-data1");
-    let dKey = keyStrToArr(input, 64);
-    dKey[47] = 0xB0; // See the comment at the end
+    input[47] = 0xB0; // See the comment at the end
     const data1KeyType = await data1KeySetup();
-    let data1 = await window.crypto.subtle.decrypt(data1IvType, data1KeyType, dKey.buffer);
+    let data1 = await window.crypto.subtle.decrypt(data1IvType, data1KeyType, input.buffer);
     data1 = keyArrToInt(new Uint8Array(data1, 0, 16));
     output.value = toHex(data1, 32);
 }
 
 async function encryptDkey(str) {
-    const input = hexInput(str, 32, "ps3-data1");
+    const input = keyIntToArr(hexInput(str, 32, "ps3-data1"));
     const output = document.getElementById("ps3-disc-key");
-    const data1 = keyStrToArr(input);
     const data1KeyType = await data1KeySetup();
-    let dKey = await window.crypto.subtle.encrypt(data1IvType, data1KeyType, data1);
+    let dKey = await window.crypto.subtle.encrypt(data1IvType, data1KeyType, input);
     dKey = keyArrToInt(new Uint8Array(dKey, 0, 16));
     output.value = toHex(dKey, 32);
 }

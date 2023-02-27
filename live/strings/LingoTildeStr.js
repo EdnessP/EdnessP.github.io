@@ -17,7 +17,7 @@
   ... Or just replace the unpacked string at 0040ACF0 in RAM, but that's no fun and won't change the 1st character.
 */
 
-// Written by Edness   v1.0   2022-09-09
+// Written by Edness   v1.1   2022-09-09 - 2023-02-27
 
 const lingoCharSize = 5;
 
@@ -50,7 +50,7 @@ function lingoCompress(str) {
 
 function lingoDecompress(str) {
     const output = document.getElementById("lingo-decomp-output");
-    let input = parseInt(hexInput(str, 8, "lingo-comp-output"));
+    let input = hexInput(str, 8, "lingo-comp-output");
     let string = "";
     for (let i = 0; i < lingoCharSize; i++) {
         string += lingoChars[(input % 33) >> 0];
