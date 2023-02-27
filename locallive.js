@@ -1,13 +1,15 @@
 // Written by Edness   2022-09-07 - 2023-02-27
 
 function toInt(hexStr) {
+    const nybbles = 12; // limit is 1<<53 (13.25), but using 1<<48 (12) to be 8-bit aligned
+    const bits = BigInt(nybbles << 2); // so it's possible to increase to 1<<52 (13) but eh
     const input = hexStr.startsWith("0x") ? hexStr.slice(2) : hexStr;
-    if (input.length <= 12) { // limit is 1<<53, but using 1<<48 just because
+    if (input.length <= nybbles) {
         return parseInt(input, 16);
     }
     let output = 0n;
-    for (var idx = input.length, shift = 0n; idx > 12; idx -= 12, shift += 48n) {
-        output |= BigInt(parseInt(input.slice(idx - 12, idx), 16)) << shift;
+    for (var idx = input.length, shift = 0n; idx > nybbles; idx -= nybbles, shift += bits) {
+        output |= BigInt(parseInt(input.slice(idx - nybbles, idx), 16)) << shift;
     }
     output |= BigInt(parseInt(input.slice(0, idx), 16)) << shift;
     return output;
