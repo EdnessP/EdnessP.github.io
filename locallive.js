@@ -14,14 +14,14 @@ function toHex(num, size = 8) {
     return `0x${num.toString(16).padStart(size, "0").toUpperCase()}`;
 }
 
-function toInt(str) {
-    const input = str.startsWith("0x") ? str.slice(2) : str;
-    if (input.length <= 8) {
+function toInt(hexStr) {
+    const input = hexStr.startsWith("0x") ? hexStr.slice(2) : hexStr;
+    if (input.length <= 12) { // limit is 1<<53, but using 1<<48 just because
         return parseInt(input, 16);
     }
     let output = 0n;
-    for (var idx = input.length, shift = 0n; idx > 8; idx -= 8, shift += 32n) {
-        output |= BigInt(parseInt(input.slice(idx - 8, idx), 16)) << shift;
+    for (var idx = input.length, shift = 0n; idx > 12; idx -= 12, shift += 48n) {
+        output |= BigInt(parseInt(input.slice(idx - 12, idx), 16)) << shift;
     }
     output |= BigInt(parseInt(input.slice(0, idx), 16)) << shift;
     return output;

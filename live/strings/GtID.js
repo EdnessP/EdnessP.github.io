@@ -18,9 +18,7 @@ function boCompGtID(str) {
     const output = document.getElementById("bo-id-comp-output");
     let result = new BigUint64Array([0n]);
     for (let i = 0; i < boCharSize; i++) {
-        // I'm aware of the 53-bit precision limit in JS but none of these BigInt() calculations
-        // should exceed that.  Only the result should, which is mitigated by BigUint64Array().
-        result[0] += BigInt(boCmpChars[input.charCodeAt(i)]) * BigInt(boChars.length ** i);
+        result[0] += BigInt(boCmpChars[input.charCodeAt(i)]) * (BigInt(boChars.length) ** BigInt(i));
     }
     output.value = toHex(result[0], 16);
 }
