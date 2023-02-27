@@ -18,16 +18,13 @@ function toInt(str) {
     const input = str.startsWith("0x") ? str.slice(2) : str;
     if (input.length <= 8) {
         return parseInt(input, 16);
-    } else {
-        let shift = 0n;
-        let output = 0n;
-        for (var i = input.length; i > 8; i -= 8) {
-            output |= BigInt(parseInt(input.slice(i - 8, i), 16)) << shift;
-            shift += 32n;
-        }
-        output |= BigInt(parseInt(input.slice(0, i), 16)) << shift;
-        return output;
     }
+    let output = 0n;
+    for (var idx = input.length, shift = 0n; idx > 8; idx -= 8, shift += 32n) {
+        output |= BigInt(parseInt(input.slice(idx - 8, idx), 16)) << shift;
+    }
+    output |= BigInt(parseInt(input.slice(0, idx), 16)) << shift;
+    return output;
 }
 
 /*
