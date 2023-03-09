@@ -2,7 +2,7 @@
 // and  GtIDUnCompress  functions - an 8 byte compressed format for strings up
 // to 12 characters long using upper-case alphanumeric symbols.
 
-// Written by Edness   v1.1   2022-09-09 - 2023-02-27
+// Written by Edness   v1.2   2022-09-09 - 2023-03-09
 
 const boCharSize = 12;
 
@@ -23,8 +23,8 @@ function boCompGtID(str) {
     output.value = toHex(result[0], 16);
 }
 
-function boDecompGtID(str) {
-    const input = new BigUint64Array([hexInput(str, 16, "bo-id-comp-output")]);
+function boDecompGtID(elem) {
+    const input = new BigUint64Array([hexInput(elem, 16)]);
     const output = document.getElementById("bo-id-decomp-output");
     let string = "";
     for (let i = 0; i < boCharSize; i++) {

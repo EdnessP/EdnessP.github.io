@@ -1,6 +1,6 @@
 // PS3 Data1 <-> DiscKey AES-128 CBC encryption routine
 // Script is based on publicly available information from the PS3 Dev Wiki
-// Written by Edness   v1.3   2023-01-23 - 2023-02-27
+// Written by Edness   v1.4   2023-01-23 - 2023-03-09
 
 function keyArrToInt(keyArr) {
     let key = 0n;
@@ -20,8 +20,8 @@ function keyIntToArr(keyInt, arrLen = 16) {
     return key;
 }
 
-async function decryptDkey(str) {
-    const input = keyIntToArr(hexInput(str, 32, "ps3-disc-key"), 64);
+async function decryptDkey(elem) {
+    const input = keyIntToArr(hexInput(elem, 32), 64);
     const output = document.getElementById("ps3-data1");
     input[47] = 0xB0; // See the comment at the end
     const data1KeyType = await data1KeySetup();
@@ -30,8 +30,8 @@ async function decryptDkey(str) {
     output.value = toHex(data1, 32);
 }
 
-async function encryptDkey(str) {
-    const input = keyIntToArr(hexInput(str, 32, "ps3-data1"));
+async function encryptDkey(elem) {
+    const input = keyIntToArr(hexInput(elem, 32));
     const output = document.getElementById("ps3-disc-key");
     const data1KeyType = await data1KeySetup();
     let dKey = await window.crypto.subtle.encrypt(data1IvType, data1KeyType, input);

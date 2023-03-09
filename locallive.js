@@ -1,8 +1,8 @@
-// Written by Edness   2022-09-07 - 2023-02-27
+// Written by Edness   2022-09-07 - 2023-03-09
 
 function toInt(hexStr) {
-    const nybbles = 12; // limit is 1<<53 (13.25), but using 1<<48 (12) to be 8-bit aligned
-    const bits = BigInt(nybbles << 2); // so it's possible to increase to 1<<52 (13) but eh
+    const nybbles = 12; // limit is 1<<53 (13.25), but using 1<<48 (12) to be byte aligned,
+    const bits = BigInt(nybbles * 4); // so it's possible to increase to 1<<52 (13), but eh
     const input = hexStr.startsWith("0x") ? hexStr.slice(2) : hexStr;
     if (input.length <= nybbles) {
         return parseInt(input, 16);
@@ -15,14 +15,14 @@ function toInt(hexStr) {
     return output;
 }
 
-function hexInput(str, size, elem) {
-    const strPad = `0x${str.replace(/\s/g, "").slice(2, size + 2).toUpperCase().replace(/[^0-9A-F]/g, "0").padEnd(size, "0")}`;
+function hexInput(elem, size) {
     const input = document.getElementById(elem);
+    const strFix = `0x${input.value.replace(/\s/g, "").slice(2, size + 2).toUpperCase().replace(/[^0-9A-F]/g, "0").padEnd(size, "0")}`;
     let curPos = input.selectionStart; // identical to selectionEnd
     if (curPos < 2) { curPos = 2; } // force to stay after 0x
-    input.value = strPad;
+    input.value = strFix;
     input.setSelectionRange(curPos, curPos);
-    return toInt(strPad);
+    return toInt(strFix);
 }
 
 function toHex(num, size = 8) {
