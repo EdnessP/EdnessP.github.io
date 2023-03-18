@@ -94,6 +94,7 @@ textarea {
     text-align: center;
     font-family: monospace;
     max-width: 26ch;
+    min-width: 26ch;
 }
 
 .local-textinput {
