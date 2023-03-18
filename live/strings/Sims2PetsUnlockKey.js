@@ -198,7 +198,7 @@ function s2PetsEncodeKey() {
     for (let i = 0, j = 0; i < 2; i++, j += 5) {
         for (let k = 0; k < 7; k++) {
             for (let g = j; g < j + 5; g++) {
-                let idx = k + i * 7; // char 0-14
+                let idx = k + i * 7; // char 0-14                    /*<<0-4*/                    /*<<0-4*/
                 keyEnc[idx] = keyDec[g] >>> k & 1 ? keyEnc[idx] | 1 << g - j : keyEnc[idx] & ~(1 << g - j);
             }
         }
