@@ -63,10 +63,10 @@ const s2PetsGifts = { // head fashion icons for cats reuse the ones for dogs
 
 function s2PetsDecodeKey(key) {
     const inKey = key.toUpperCase().replace(/[^0-9A-Z]/g, "").slice(0, s2PetsKeyLen);
-    const outKey = document.getElementById("sims2pets-key-output");
-    const outName = document.getElementById("sims2pets-key-name-output");
-    const outGiftID = document.getElementById("sims2pets-gift-id-output");
-    const outGiftName = document.getElementById("sims2pets-gift-name-output");
+    const outKey = document.getElementById("sims-key-output");
+    const outName = document.getElementById("sims-key-name-output");
+    const outGiftID = document.getElementById("sims-gift-id-output");
+    const outGiftName = document.getElementById("sims-gift-name-output");
     if (!inKey.length) {
         outKey.value = "";
         outName.value = "";
@@ -149,10 +149,10 @@ function s2PetsDecodeKey(key) {
 }
 
 function s2PetsEncodeKey() {
-    const outKey = document.getElementById("sims2pets-key-output");
-    const outName = document.getElementById("sims2pets-key-name-output");
-    const outGiftID = document.getElementById("sims2pets-gift-id-output");
-    const outGiftName = document.getElementById("sims2pets-gift-name-output");
+    const outKey = document.getElementById("sims-key-output");
+    const outName = document.getElementById("sims-key-name-output");
+    const outGiftID = document.getElementById("sims-gift-id-output");
+    const outGiftName = document.getElementById("sims-gift-name-output");
 
     const keyName = outName.value.padEnd(8, " ");
     let giftID = outGiftID.value.replace(/[^0-9\x2D]/g, ""); //.slice(0, 2);
