@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="/external/jquery.min.js"></script>
+    <link rel="stylesheet" href="/external/bootstrap.min.css">
+    <link rel="stylesheet" href="/localstyle.css">
+    <meta charset="UTF-8">
+    <meta content="Redump Tools" property="og:title">
+    <meta content="Tools related to working with data on Redump.org" property="og:description">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Redump - Edness</title>
+</head>
+
+<body class="local-bg">
+    <nav id="load-nav"></nav>
+    <noscript><big><b>Warning! This site relies on JavaScript! Please enable it! The sources for all of the scripts can be viewed at <a href="https://github.com/EdnessP/EdnessP.github.io">the site's repository.</a></b></big></noscript>
+
+    <div class="px-lg-5 pb-lg-5">
+        <h2>Redump Tools</h2>
+        <p>Tools related to working with data on <a href="http://redump.org/">Redump.org</a>.
+        <div id="load-toc"></div>
+
+        <h3>Permanent Information & Control</h3>
+        <p>Dumped and retrieved from Blu-Ray discs.
+
+        <div class="info-table">
+            <p id="about">Parses the Permanent Information & Control (PIC) hexdump retrieved from pressed BD-ROM discs.
+            <p id="source">
+                <a href="https://github.com/EdnessP/scripts/blob/main/other/PICparse.py">Py (Standalone)</a>,
+                <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/redump/PICparse.js">JS (Live)</a>.
+        </div>
+        <form class="d-flex">
+            <textarea class="form-control me-2 local-pic-input" type="text" placeholder="PIC data input" oninput="parsePic()" id="pic-parse-input"></textarea>
+            <textarea class="form-control me-1" type="text" placeholder="PIC data output" id="pic-parse-output" readonly></textarea>
+        </form>
+        <form>
+            <input type="checkbox" id="pic-parse-verbose" onchange="parsePic()">
+            <label for="pic-parse-verbose">Verbose output</label>
+            <!-- Another checkbox next to it to align the PIC to the exact size used by Redump? -->
+        </form>
+        <br>
+
+        <h3>PlayStation 3 Disc Key</h3>
+        <p>Dumped and retrieved from PlayStation 3 discs.
+
+        <div class="info-table">
+            <p id="about">Converts the PlayStation 3 Data1 key to and from the Disc Key used for decrypting game disc sectors.
+            <p id="source">
+                <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/redump/PS3DiscKey.js">JS (Live)</a>.
+        </div>
+        <form>
+            <div style="float: left;" class="me-2">
+                <h5>Data1</h5>
+                <input class="form-control local-hex-output-128" type="text" value="0x00000000000000000000000000000000" oninput="encryptDkey(this.id)" id="ps3-data1"></input>
+            </div>
+            <div style="float: left;" class="me-1">
+                <h5>Disc Key</h5>
+                <input class="form-control local-hex-output-128" type="text" value="0xE855C9AF3B8BE026FD97A7CAD9C3F890" oninput="decryptDkey(this.id)" id="ps3-disc-key"></input>
+           </div>
+        </form>
+        <br><br><br>
+
+    </div>
+</body>
+
+<script type="text/javascript" src="/localscript.js"></script>
+<script type="text/javascript" src="/locallive.js"></script>
+
+<script type="text/javascript" src="/live/redump/PICparse.js"></script>
+<script type="text/javascript" src="/live/redump/PS3DiscKey.js"></script>
+</html>
