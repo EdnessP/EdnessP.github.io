@@ -85,6 +85,17 @@ textarea {
     max-width: 11ch;
 }
 
+.local-output-number {
+    text-align: center;
+    max-width: 8ch;
+}
+
+.local-output-4x6-key {
+    text-align: center;
+    font-family: monospace;
+    max-width: 26ch;
+}
+
 .local-textinput {
     height: 20em;
 }
