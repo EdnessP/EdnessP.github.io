@@ -72,17 +72,7 @@ function arrCompare(arrLeft, arrRight) {
 }
 
 function objCompare(objLeft, objRight) {
-    objLeftKeys = Object.keys(objLeft);
-    objRightKeys = Object.keys(objRight);
-    if (!arrCompare(objLeftKeys, objRightKeys)) {
-        return false;
-    }
-    for (let i = 0; i < objLeftKeys.length; i++) {
-        if (objLeft[objLeftKeys[i]] !== objRight[objRightKeys[i]]) {
-            return false;
-        }
-    }
-    return true;
+    return arrCompare(Object.keys(objLeft), Object.keys(objRight)) && arrCompare(Object.values(objLeft), Object.values(objRight));
 }
 
 // I'll be honest I never bothered to look up if JS has any native method of reading bytes like a file,
