@@ -1,4 +1,4 @@
-// Written by Edness   2022-09-07 - 2023-03-09
+// Written by Edness   2022-09-07 - 2023-05-08
 
 function toInt(hexStr) {
     const nybbles = 12; // limit is 1<<53 (13.25), but using 1<<48 (12) to be byte aligned,
@@ -57,6 +57,32 @@ function toStr(strArr) {
 
 function reverseString(str) {
     return str.split("").reverse().join("");
+}
+
+function arrCompare(arrLeft, arrRight) {
+    if (arrLeft.length !== arrRight.length) {
+        return false;
+    }
+    for (let i = 0; i < arrLeft.length; i++) {
+        if (arrLeft[i] !== arrRight[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function objCompare(objLeft, objRight) {
+    objLeftKeys = Object.keys(objLeft);
+    objRightKeys = Object.keys(objRight);
+    if (!arrCompare(objLeftKeys, objRightKeys)) {
+        return false;
+    }
+    for (let i = 0; i < objLeftKeys.length; i++) {
+        if (objLeft[objLeftKeys[i]] !== objRight[objRightKeys[i]]) {
+            return false;
+        }
+    }
+    return true;
 }
 
 // I'll be honest I never bothered to look up if JS has any native method of reading bytes like a file,

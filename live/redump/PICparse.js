@@ -4,12 +4,12 @@
 
 const picMaxLength = 0xC4 * 2; // Up to triple layer pressed BDs
 
-class PicReadConstInfo {
-    constructor(pic) {
-        this.totalLayers = pic.readInt(0x1) >> 4;
-        pic.seek(0x7, 1);
-        this.totalSectors = pic.readInt(0x4) - 1;
-    }
+function picReadConstInfo(pic) {
+    let picConst = {};
+    picConst.totalLayers = pic.readInt(0x1) >> 4;
+    pic.seek(0x7, 1);
+    picConst.totalSectors = pic.readInt(0x4) - 1;
+    return picConst;
 }
 
 function parsePic() {
@@ -39,10 +39,10 @@ function parsePic() {
         pic.seek(0x1, 1);
         let identifier = pic.readStr(0x4);
         if (layer === 0) {
-            var picConst = new PicReadConstInfo(pic);
-        } else { // Can't necessarily compare arrays like in Python, so this will have to do
-            let _picConst = new PicReadConstInfo(pic);
-            if (picConst.totalLayers !== _picConst.totalLayers || picConst.totalSectors !== _picConst.totalSectors) {
+            var picConst = picReadConstInfo(pic);
+        } else {
+            let _picConst = picReadConstInfo(pic);
+            if (!objCompare(picConst, _picConst)) {
                 picOutput += `Warning: Constant data mismatch for Layer ${layer}! The final output might be incorrect!\n`;
             }
         }
