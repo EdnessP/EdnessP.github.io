@@ -33,8 +33,8 @@
                 <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/BullyHash.js">JS (Live)</a>.
         </div>
         <form class="d-flex">
-            <input class="form-control me-2 local-hex-output" type="text" value="0x00000000" id="bully-rstm-output" readonly>
-            <input class="form-control me-1" type="text" placeholder="String input" oninput="bullyRstmHash(this.value, 0)">
+            <input class="form-control mt-2 me-2 local-hex-output" type="text" value="0x00000000" id="bully-rstm-output" readonly>
+            <input class="form-control mt-2 me-1" type="text" placeholder="String input" oninput="bullyRstmHash(this.value, 0)">
         </form>
         <br>
 
@@ -47,8 +47,8 @@
                 <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/BullyHash.js">JS (Live)</a>.
         </div>
         <form class="d-flex">
-            <input class="form-control me-2 local-hex-output" type="text" value="0x00000000" id="bully-label-output" readonly>
-            <input class="form-control me-1" type="text" placeholder="String input" oninput="bullyLabelHash(this.value)">
+            <input class="form-control mt-2 me-2 local-hex-output" type="text" value="0x00000000" id="bully-label-output" readonly>
+            <input class="form-control mt-2 me-1" type="text" placeholder="String input" oninput="bullyLabelHash(this.value)">
         </form>
         <br>
 
@@ -60,8 +60,8 @@
                 <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/BullyAE_encryption.js">JS (Live)</a>.
         </div>
         <form class="d-flex">
-            <textarea class="form-control me-2 local-textinput" type="text" placeholder="Encrypted string" id="bullyae-encrypted" oninput="aeDecrypt(this.value)"></textarea>
-            <textarea class="form-control me-1 local-textinput" type="text" placeholder="Decrypted string" id="bullyae-decrypted" oninput="aeEncrypt(this.value)"></textarea>
+            <textarea class="form-control mt-2 me-2 local-textinput" type="text" placeholder="Encrypted string" id="bullyae-encrypted" oninput="aeDecrypt(this.value)"></textarea>
+            <textarea class="form-control mt-2 me-1 local-textinput" type="text" placeholder="Decrypted string" id="bullyae-decrypted" oninput="aeEncrypt(this.value)"></textarea>
         </form>
         <br>
 
@@ -79,8 +79,8 @@
                 <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/codfh_hash.js">JS (Live)</a>.
         </div>
         <form class="d-flex">
-            <input class="form-control me-2 local-hex-output-long" type="text" value="0x84222325CBF29CE4" id="codfh-hash-output" readonly>
-            <input class="form-control me-1" type="text" placeholder="String input" oninput="codfhSparkHash(this.value)">
+            <input class="form-control mt-2 me-2 local-hex-output-long" type="text" value="0x84222325CBF29CE4" id="codfh-hash-output" readonly>
+            <input class="form-control mt-2 me-1" type="text" placeholder="String input" oninput="codfhSparkHash(this.value)">
         </form>
         <br>
 
@@ -99,8 +99,8 @@
                 <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/GtID.js">JS (Live)</a>.
         </div>
         <form class="d-flex">
-            <input class="form-control me-2 local-hex-output-long" type="text" value="0x0000000000000000" oninput="boDecompGtID(this.id)" id="bo-id-comp-output">
-            <input class="form-control me-1" type="text" placeholder="String input" oninput="boCompGtID(this.value)" id="bo-id-decomp-output" maxlength=12>
+            <input class="form-control mt-2 me-2 local-hex-output-long" type="text" value="0x0000000000000000" oninput="boDecompGtID(this.id)" id="bo-id-comp-output">
+            <input class="form-control mt-2 me-1" type="text" placeholder="String input" oninput="boCompGtID(this.value)" id="bo-id-decomp-output" maxlength=12>
         </form>
         <br>
 
@@ -114,8 +114,40 @@
                 <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/GtHash.js">JS (Live)</a>.
         </div>
         <form class="d-flex">
-            <input class="form-control me-2 local-hex-output" type="text" value="0xFFFFFFFF" id="bo-hash-output" readonly>
-            <input class="form-control me-1" type="text" placeholder="String input" oninput="boGtHash(this.value)">
+            <input class="form-control mt-2 me-2 local-hex-output" type="text" value="0xFFFFFFFF" id="bo-hash-output" readonly>
+            <input class="form-control mt-2 me-1" type="text" placeholder="String input" oninput="boGtHash(this.value)">
+        </form>
+        <br>
+
+        <h3>Jak & Daxter</h3>
+        <p>A string compression algorithm used in Jak 3 and Jak X: Combat Racing.
+
+        <h4>String Compression</h4>
+        <div class="info-table">
+            <p id="about">A 42-bit string compression algorithm used to store audio entries.
+            <p id="indepth">The original code in the game is longer because the character indices are worked out on the spot - it's been simplified here.<br>
+            Each compressed entry consists of multiple fields: the first 42 bits (0-41) are used for the compressed filename, bit 42 stores a flag whether or not the sound file is stereo, bit 43 stores a flag whether or not the sound file is meant for the .INT container, bits 44-47 store a flag that seems to correlate to the frequency/sample rate of the sound file most of the times, and the last 16 bits store the offset of the file aligned to 32768 bytes.<br>
+            The 42-bit compressed filename is split into two 21-bit fields, the upper half storing the first 4 compressed characters, and the lower half storing the last 4 compressed characters. For each compressed field, the integer is divided by the length of the character set, the remainder of which is used to index the decompressed character. The final decompressed string is then reversed.
+            <p id="source">
+                <a href="https://github.com/EdnessP/scripts/blob/main/jak-daxter/jak3-Xvagdir_algo.py">Py (Standalone)</a>,
+                <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/Jak3X_VAGDIR.js">JS (Live)</a>.
+        </div>
+        <form>
+            <div style="float: left;" class="d-flex">
+                <input class="form-control mt-2 me-2 local-hex-output-long" type="text" value="0x0000000000000000" oninput="jakDecompVagdir(this.id)" id="jak-comp-output">
+                <input class="form-control mt-2 me-2 local-hex-output" type="text" placeholder="Offset" oninput="jakCompVagdir(false)" id="jak-decomp-offset">
+                <input class="form-control mt-2 me-2 local-hex-output-nybble" type="text" placeholder="ID" oninput="jakCompVagdir(false)" id="jak-decomp-frequency">
+            </div>
+            <div style="float: left;">
+                <input class="form-control my-2 me-1" type="text" placeholder="Filename" oninput="jakCompVagdir(true)" id="jak-decomp-output" maxlength=8>
+           </div>
+        </form>
+        <div style="clear: left;">
+        <form>
+            <input type="checkbox" id="jak-decomp-stereo-toggle" onchange="jakCompVagdir(true)">
+            <label class="pe-1" for="jak-decomp-stereo-toggle">Stereo</label>
+            <input type="checkbox" id="jak-decomp-vwint-toggle" onchange="jakCompVagdir(true)">
+            <label for="jak-decomp-vwint-toggle">VAGWAD.INT</label>
         </form>
         <br>
 
@@ -134,8 +166,8 @@
                 <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/LingoTildeStr.js">JS (Live)</a>.
         </div>
         <form class="d-flex">
-            <input class="form-control me-2 local-hex-output" type="text" value="0x00000000" oninput="lingoDecompress(this.id)" id="lingo-comp-output">
-            <input class="form-control me-1" type="text" placeholder="String input" oninput="lingoCompress(this.value)" id="lingo-decomp-output" maxlength=5>
+            <input class="form-control mt-2 me-2 local-hex-output" type="text" value="0x00000000" oninput="lingoDecompress(this.id)" id="lingo-comp-output">
+            <input class="form-control mt-2 me-1" type="text" placeholder="String input" oninput="lingoCompress(this.value)" id="lingo-decomp-output" maxlength=5>
         </form>
         <br>
 
@@ -151,8 +183,8 @@
                 <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/MclHash.js">JS (Live)</a>.
         </div>
         <form class="d-flex">
-            <input class="form-control me-2 local-hex-output" type="text" value="0x00000000" id="mcl-audio-hash-output" readonly>
-            <input class="form-control me-1" type="text" placeholder="String input" oninput="mclubAudioHash(this.value)">
+            <input class="form-control mt-2 me-2 local-hex-output" type="text" value="0x00000000" id="mcl-audio-hash-output" readonly>
+            <input class="form-control mt-2 me-1" type="text" placeholder="String input" oninput="mclubAudioHash(this.value)">
         </form>
         <br>
 
@@ -165,8 +197,8 @@
                 <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/MclHash.js">JS (Live)</a>.
         </div>
         <form class="d-flex">
-            <input class="form-control me-2 local-hex-output" type="text" value="0x00000000" id="mcl-str-hash-output" readonly>
-            <input class="form-control me-1" type="text" placeholder="String input" oninput="mclubStringHash(this.value)">
+            <input class="form-control mt-2 me-2 local-hex-output" type="text" value="0x00000000" id="mcl-str-hash-output" readonly>
+            <input class="form-control mt-2 me-1" type="text" placeholder="String input" oninput="mclubStringHash(this.value)">
         </form>
         <br>
 
@@ -181,8 +213,8 @@
                 <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/BullyHash.js">JS (Live)</a>.
         </div>
         <form class="d-flex">
-            <input class="form-control me-2 local-hex-output" type="text" value="0x00000000" id="mcl-bully-hash-output" readonly>
-            <input class="form-control me-1" type="text" placeholder="String input" oninput="bullyRstmHash(this.value, 1)">
+            <input class="form-control mt-2 me-2 local-hex-output" type="text" value="0x00000000" id="mcl-bully-hash-output" readonly>
+            <input class="form-control mt-2 me-1" type="text" placeholder="String input" oninput="bullyRstmHash(this.value, 1)">
         </form>
         <br>
 
@@ -198,8 +230,8 @@
                 <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/tsg_hash.js">JS (Live)</a>.
         </div>
         <form class="d-flex">
-            <input class="form-control me-2 local-hex-output" type="text" value="0x00000000" id="tsg-hash-output" readonly>
-            <input class="form-control me-1" type="text" placeholder="String input" oninput="tsgHash(this.value)">
+            <input class="form-control mt-2 me-2 local-hex-output" type="text" value="0x00000000" id="tsg-hash-output" readonly>
+            <input class="form-control mt-2 me-1" type="text" placeholder="String input" oninput="tsgHash(this.value)">
         </form>
         <br>
 
@@ -214,8 +246,8 @@
                 <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/SimsConsoleHash.js">JS (Live)</a>.
         </div>
         <form class="d-flex">
-            <input class="form-control me-2 local-hex-output" type="text" value="0x00000000" id="simsc-hash-output" readonly>
-            <input class="form-control me-1" type="text" placeholder="String input" id="simsc-hash-input" oninput="simsConsoleHash()">
+            <input class="form-control my-2 me-2 local-hex-output" type="text" value="0x00000000" id="simsc-hash-output" readonly>
+            <input class="form-control my-2 me-1" type="text" placeholder="String input" id="simsc-hash-input" oninput="simsConsoleHash()">
         </form>
         <form>
             <input type="checkbox" id="sims1c-hash-toggle" onchange="simsConsoleHash()">
@@ -231,12 +263,12 @@
                 <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/Sims2PetsUnlockKey.js">JS (Live)</a>.
         </div>
         <form class="d-flex">
-            <input class="form-control me-2 local-output-4x6-key" type="text" placeholder="Unlock Code" id="sims-key-output" oninput="s2PetsDecodeKey(this.value)" maxlength=23>
-            <input class="form-control me-1" type="text" placeholder="Name" id="sims-key-name-output" oninput="s2PetsEncodeKey()" maxlength=8>
+            <input class="form-control mt-2 me-2 local-output-4x6-key" type="text" placeholder="Unlock Code" id="sims-key-output" oninput="s2PetsDecodeKey(this.value)" maxlength=23>
+            <input class="form-control mt-2 me-1" type="text" placeholder="Name" id="sims-key-name-output" oninput="s2PetsEncodeKey()" maxlength=8>
         </form>
         <form class="d-flex">
-            <input class="form-control me-2 mt-2 local-output-number" type="number" placeholder="ID" id="sims-gift-id-output" oninput="s2PetsEncodeKey()" min=0 max=50>
-            <input class="form-control me-1 mt-2" type="text" placeholder="Gift" id="sims-gift-name-output" readonly>
+            <input class="form-control mt-2 me-2 local-output-number" type="number" placeholder="ID" id="sims-gift-id-output" oninput="s2PetsEncodeKey()" min=0 max=50>
+            <input class="form-control mt-2 me-1" type="text" placeholder="Gift" id="sims-gift-name-output" readonly>
         </form>
         <br>
 
@@ -252,8 +284,8 @@
                 <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/TRLegendHash.js">JS (Live)</a>.
         </div>
         <form class="d-flex">
-            <input class="form-control me-2 local-hex-output" type="text" value="0x00000000" id="tr-legend-hash-output" readonly>
-            <input class="form-control me-1" type="text" placeholder="String input" oninput="trLegendHash(this.value)">
+            <input class="form-control mt-2 me-2 local-hex-output" type="text" value="0x00000000" id="tr-legend-hash-output" readonly>
+            <input class="form-control mt-2 me-1" type="text" placeholder="String input" oninput="trLegendHash(this.value)">
         </form>
 
         <!-- Generic template
@@ -283,6 +315,7 @@
 <script type="text/javascript" src="/live/strings/codfh_hash.js"></script>
 <script type="text/javascript" src="/live/strings/GtHash.js"></script>
 <script type="text/javascript" src="/live/strings/GtID.js"></script>
+<script type="text/javascript" src="/live/strings/Jak3X_VAGDIR.js"></script>
 <script type="text/javascript" src="/live/strings/LingoTildeStr.js"></script>
 <script type="text/javascript" src="/live/strings/MclHash.js"></script>
 <script type="text/javascript" src="/live/strings/SimsConsoleHash.js"></script>

@@ -37,7 +37,7 @@ const lingoCmpChars = {
 };
 
 function lingoCompress(str) {
-    const input = reverseString(str.toUpperCase().padEnd(lingoCharSize, "A"));
+    const input = strReverse(str.toUpperCase().padEnd(lingoCharSize, "A"));
     const output = document.getElementById("lingo-comp-output");
     let chars = "";
     for (let i = 0; i < lingoCharSize; i++) {

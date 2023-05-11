@@ -55,8 +55,12 @@ function toStr(strArr) {
     return new TextDecoder().decode(strArr);
 }
 
-function reverseString(str) {
+function strReverse(str) {
     return str.split("").reverse().join("");
+}
+
+function rTrim(str) {
+    return str.replace(/\s+$/g, "");
 }
 
 function arrCompare(arrLeft, arrRight) {

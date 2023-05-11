@@ -85,6 +85,12 @@ textarea {
     max-width: 11ch;
 }
 
+.local-hex-output-nybble {
+    text-align: center;
+    font-family: monospace;
+    max-width: 6ch;
+}
+
 .local-output-number {
     text-align: center;
     max-width: 8ch;
@@ -98,7 +104,7 @@ textarea {
 }
 
 .local-textinput {
-    height: 20em;
+    height: 15em;
 }
 
 .local-pic-input {

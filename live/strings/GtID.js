@@ -14,7 +14,7 @@ for (let x = 0; x < boChars.length; x++) {
 }
 
 function boCompGtID(str) {
-    const input = reverseString(str.toUpperCase().replace(/[^\s0-9A-Z-/_]/g, " ").padEnd(boCharSize, " "));
+    const input = strReverse(str.toUpperCase().replace(/[^\s0-9A-Z-/_]/g, " ").padEnd(boCharSize, " "));
     const output = document.getElementById("bo-id-comp-output");
     let result = new BigUint64Array([0n]);
     for (let i = 0; i < boCharSize; i++) {
@@ -31,5 +31,5 @@ function boDecompGtID(elem) {
         string += boChars[input[0] % BigInt(boChars.length)];
         input[0] /= BigInt(boChars.length);
     }
-    output.value = reverseString(string).replace(/\s+$/g, "");
+    output.value = strReverse(rTrim(string));
 }
