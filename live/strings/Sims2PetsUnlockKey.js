@@ -145,7 +145,7 @@ function s2PetsDecodeKey(key) {
     for (let i = 0; i < 8; i++) {
         keyName += s2PetsChars[keyDec[i]];
     }
-    outName.value = rTrim(keyName);
+    outName.value = keyName.trimEnd();
 }
 
 function s2PetsEncodeKey() {

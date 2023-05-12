@@ -36,7 +36,7 @@ function jakDecompVagdir(elem) {
         tmpName = BigInt(parseInt(tmpName / BigInt(jakChars.length)));
     }
 
-    outName.value = rTrim(strReverse(inName));
+    outName.value = strReverse(inName).trimEnd();
     outOffset.value = toHex(inOffset, 8);
     outFrequency.value = toHex(inFrequency, 1);
 

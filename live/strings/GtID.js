@@ -31,5 +31,5 @@ function boDecompGtID(elem) {
         string += boChars[input[0] % BigInt(boChars.length)];
         input[0] /= BigInt(boChars.length);
     }
-    output.value = rTrim(strReverse(string));
+    output.value = strReverse(string).trimEnd();
 }

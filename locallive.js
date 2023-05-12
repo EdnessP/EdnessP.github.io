@@ -59,10 +59,6 @@ function strReverse(str) {
     return str.split("").reverse().join("");
 }
 
-function rTrim(str) {
-    return str.replace(/\s+$/g, "");
-}
-
 function arrCompare(arrLeft, arrRight) {
     if (arrLeft.length !== arrRight.length) {
         return false;
