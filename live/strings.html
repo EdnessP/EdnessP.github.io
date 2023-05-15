@@ -126,7 +126,7 @@
         <div class="info-table">
             <p id="about">A 42-bit string compression algorithm used to store audio entries.
             <p id="indepth">The original code in the game is longer because the character indices are worked out on the spot - it's been simplified here with a pre-made character set.<br>
-            Each compressed entry consists of multiple fields: the first 42 bits (0 - 41) are used for the compressed filename, bit 42 stores a flag whether or not the sound file is stereo, bit 43 stores a flag whether or not the sound file is meant for the .INT container, bits 44 - 47, while uncertain, store a value that seems to correlate to the frequency/sample rate of the sound file most of the times, and the last 16 bits store the offset of the file aligned to 32768 bytes.<br>
+            Each compressed entry consists of multiple fields: the first 42 bits (0 - 41) are used for the compressed filename, bit 42 stores a flag whether or not the sound file is stereo, bit 43 stores a flag whether or not the sound file is meant for the international VAGWAD.INT container, bits 44 - 47, while uncertain, store a value that seems to correlate to the frequency/sample rate of the sound file most of the times, and the last 16 bits store the offset of the file aligned to 32768 bytes.<br>
             The 42-bit compressed filename is split into two 21-bit fields, the upper half storing the first 4 compressed characters, and the lower half storing the last 4 compressed characters. For each compressed field, the integer is divided by the length of the character set, the remainder of which is used to index the decompressed character. The final decompressed string is then reversed.
             <p id="source">
                 <a href="https://github.com/EdnessP/scripts/blob/main/jak-daxter/jak3-Xvagdir_algo.py">Py (Standalone)</a>,
@@ -145,9 +145,9 @@
         <div style="clear: left;">
         <form>
             <input type="checkbox" id="jak-decomp-stereo-toggle" onchange="jakCompVagdir(true)">
-            <label class="pe-1" for="jak-decomp-stereo-toggle">Stereo</label>
+            <label class="pe-2" for="jak-decomp-stereo-toggle">Stereo</label>
             <input type="checkbox" id="jak-decomp-vwint-toggle" onchange="jakCompVagdir(true)">
-            <label for="jak-decomp-vwint-toggle">VAGWAD.INT</label>
+            <label for="jak-decomp-vwint-toggle">International</label>
         </form>
         <br>
 
