@@ -2,7 +2,7 @@
 // and  GtIDUnCompress  functions - an 8 byte compressed format for strings up
 // to 12 characters long using upper-case alphanumeric symbols.
 
-// Written by Edness   v1.2   2022-09-09 - 2023-03-09
+// Written by Edness   v1.3   2022-09-09 - 2023-05-12
 
 const boCharSize = 12;
 

@@ -17,7 +17,7 @@
   ... Or just replace the unpacked string at 0040ACF0 in RAM, but that's no fun and won't change the 1st character.
 */
 
-// Written by Edness   v1.2   2022-09-09 - 2023-03-09
+// Written by Edness   v1.3   2022-09-09 - 2023-05-11
 
 const lingoCharSize = 5;
 

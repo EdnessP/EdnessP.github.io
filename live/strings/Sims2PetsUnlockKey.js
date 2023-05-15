@@ -2,7 +2,7 @@
 // for decoding, and the function at  00120160  for encoding
 // in the PS2 PAL v1.00 executable of The Sims 2: Pets console
 
-// Written by Edness   v1.0   2023-03-18
+// Written by Edness   v1.1   2023-03-18 - 2023-05-15
 
 const s2PetsKeyLen = 19;
 const s2PetsDecLen = 13;
@@ -150,11 +150,11 @@ function s2PetsDecodeKey(key) {
 
 function s2PetsEncodeKey() {
     const outKey = document.getElementById("sims-key-output");
-    const outName = document.getElementById("sims-key-name-output");
+    const outName = document.getElementById("sims-key-name-output").value;
     const outGiftID = document.getElementById("sims-gift-id-output");
     const outGiftName = document.getElementById("sims-gift-name-output");
 
-    const keyName = outName.value.padEnd(8, " ");
+    const keyName = outName.padEnd(8, " ");
     let giftID = outGiftID.value.replace(/[^0-9\x2D]/g, ""); //.slice(0, 2);
     if (!giftID.length) {  // input type=number gives an empty string if there is a letter
         outKey.value = ""; // but i refuse to filter type=text due to the number+- buttons

@@ -1,17 +1,17 @@
 // Reimplemented from the function at  000A09B8  on the IOP
 // of the  OVERLRD2.IRX  module in the PAL version of Jak 3
 
-// Written by Edness   v1.0   2023-05-11
+// Written by Edness   v1.1   2023-05-11 - 2013-05-15
 
 const jakChars = " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-";
 
 function jakDecompVagdir(elem) {
-    const input = new BigUint64Array([hexInput(elem, 16)]);
+    const input = hexInput(elem, 16);
     const outName = document.getElementById("jak-decomp-output");
     const outOffset = document.getElementById("jak-decomp-offset");
     const outFrequency = document.getElementById("jak-decomp-frequency");
 
-    if (!input[0]) {
+    if (!input) {
         outName.value = "";
         outOffset.value = "";
         outFrequency.value = "";
@@ -20,26 +20,25 @@ function jakDecompVagdir(elem) {
         return;
     }
 
-    const cmpName = input[0] & 0x3FFFFFFFFFFn;
-    const isStereo = input[0] >> 42n & 0x1n;
-    const isVagwadInt = input[0] >> 43n & 0x1n;
-    const inFrequency = input[0] >> 44n & 0xFn;
-    const inOffset = input[0] >> 48n << 15n;
+    const cmpName = input & 0x3FFFFFFFFFFn;
+    const isStereo = input >> 42n & 0x1n;
+    const isVagwadInt = input >> 43n & 0x1n;
+    const inFrequency = input >> 44n & 0xFn;
+    const inOffset = input >> 48n << 15n;
 
     let inName = "";
-    let tmpName = cmpName & 0x1FFFFFn;
+    let tmpName = Number(cmpName & 0x1FFFFFn);
     for (let i = 0; i < 8; i++) {
         if (i === 4) {
-            tmpName = cmpName >> 21n;
+            tmpName = Number(cmpName >> 21n);
         }
-        inName += jakChars[Number(tmpName) % jakChars.length];
-        tmpName = BigInt(parseInt(tmpName / BigInt(jakChars.length)));
+        inName += jakChars[tmpName % jakChars.length];
+        tmpName = parseInt(tmpName / jakChars.length);
     }
 
-    outName.value = strReverse(inName).trimEnd();
     outOffset.value = toHex(inOffset, 8);
     outFrequency.value = toHex(inFrequency, 1);
-
+    outName.value = strReverse(inName).trimEnd();
     $("#jak-decomp-stereo-toggle").prop("checked", isStereo);
     $("#jak-decomp-vwint-toggle").prop("checked", isVagwadInt);
 }
