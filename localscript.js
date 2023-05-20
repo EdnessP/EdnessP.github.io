@@ -1,4 +1,4 @@
-// Written by Edness   2022-09-07 - 2022-09-25
+// Written by Edness   2022-09-07 - 2023-05-20
 
 $("#load-nav").load("/internal/navbar.html", function prepNavbar() {
     let navBtn = document.getElementsByClassName("nav-link");
@@ -23,11 +23,14 @@ $("#load-toc").append(function prepMainToc() {
         let entryLink = document.createElement("a");
         let entryJump = entryName.replace(/ /g, "_");
 
-        headings[i].setAttribute("id", entryJump);
-        headings[i].outerHTML = `<br>${headings[i].outerHTML}<hr>`;
         entryLink.href = `#${entryJump}`;
-        entryLink.innerHTML = entryName;
 
+        entryLink.innerHTML = "#";
+        headings[i].setAttribute("id", entryJump);
+        headings[i].innerHTML = `${entryLink.outerHTML} ${headings[i].innerHTML}`;
+        headings[i].outerHTML = `<br>${headings[i].outerHTML}<hr>`;
+
+        entryLink.innerHTML = entryName;
         entry.appendChild(entryLink);
         toc.appendChild(entry);
     }
