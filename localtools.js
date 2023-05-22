@@ -1,4 +1,4 @@
-// Written by Edness   2022-09-07 - 2022-09-23
+// Written by Edness   2022-09-07 - 2023-05-22
 
 $(".tool-entry > #title").each(function fixToolTitles() {
     this.innerHTML = this.innerHTML.trim().replace(/ /g, "&nbsp;").replace(/-/g, "&#8209;");
@@ -48,7 +48,7 @@ $(".tool-table").each(function populateToolTables() {
     // Originally I had this in jQuery, but it'd apply to every tool-entry multiple times
     let tblBody = tblNew.createTBody();
     let tblEntries = this.children;
-    for (i = 0; i < tblEntries.length; i++) {
+    for (let i = 0; i < tblEntries.length; i++) {
         let tblContent = tblEntries[i].children;
         let tblRow = tblBody.insertRow();
 

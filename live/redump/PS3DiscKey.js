@@ -1,46 +1,28 @@
 // PS3 Data1 <-> DiscKey AES-128 CBC encryption routine
 // Script is based on publicly available information from the PS3 Dev Wiki
-// Written by Edness   v1.4   2023-01-23 - 2023-03-09
-
-function keyArrToInt(keyArr) {
-    let key = 0n;
-    for (let i = 0; i < 16; i++) {
-        key <<= 8n;
-        key |= BigInt(keyArr[i]);
-    }
-    return key;
-}
-
-function keyIntToArr(keyInt, arrLen = 16) {
-    let key = new Uint8Array(arrLen);
-    for (let i = 15; i >= 0; i--) {
-        key[i] = Number(keyInt & 0xFFn);
-        keyInt >>= 8n;
-    }
-    return key;
-}
+// Written by Edness   v1.5   2023-01-23 - 2023-05-21
 
 async function decryptDkey(elem) {
-    const input = keyIntToArr(hexInput(elem, 32), 64);
+    const input = intToArr(hexInput(elem, 32), 64, 15);
     const output = document.getElementById("ps3-data1");
     input[47] = 0xB0; // See the comment at the end
     const data1KeyType = await data1KeySetup();
     let data1 = await window.crypto.subtle.decrypt(data1IvType, data1KeyType, input.buffer);
-    data1 = keyArrToInt(new Uint8Array(data1, 0, 16));
+    data1 = arrToInt(new Uint8Array(data1, 0, 16));
     output.value = toHex(data1, 32);
 }
 
 async function encryptDkey(elem) {
-    const input = keyIntToArr(hexInput(elem, 32));
+    const input = intToArr(hexInput(elem, 32), 16);
     const output = document.getElementById("ps3-disc-key");
     const data1KeyType = await data1KeySetup();
     let dKey = await window.crypto.subtle.encrypt(data1IvType, data1KeyType, input);
-    dKey = keyArrToInt(new Uint8Array(dKey, 0, 16));
+    dKey = arrToInt(new Uint8Array(dKey, 0, 16));
     output.value = toHex(dKey, 32);
 }
 
-const data1Key = keyIntToArr(0x380BCF0B53455B3C7817AB4FA3BA90EDn);
-const data1Iv = keyIntToArr(0x69474772AF6FDAB342743AEFAA186287n);
+const data1Key = intToArr(0x380BCF0B53455B3C7817AB4FA3BA90EDn, 16);
+const data1Iv = intToArr(0x69474772AF6FDAB342743AEFAA186287n, 16);
 
 const data1IvType = {name: "AES-CBC", iv: data1Iv};
 async function data1KeySetup() {

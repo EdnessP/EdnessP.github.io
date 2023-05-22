@@ -2,7 +2,7 @@
 // for decoding, and the function at  00120160  for encoding
 // in the PS2 PAL v1.00 executable of The Sims 2: Pets console
 
-// Written by Edness   v1.1   2023-03-18 - 2023-05-15
+// Written by Edness   v1.2   2023-03-18 - 2023-05-22
 
 const s2PetsKeyLen = 19;
 const s2PetsDecLen = 13;
@@ -89,7 +89,7 @@ function s2PetsDecodeKey(key) {
     }
 
     const keyEnc = new Uint8Array(s2PetsKeyLen);
-    for (i = 0; i < s2PetsKeyLen; i++) {
+    for (let i = 0; i < s2PetsKeyLen; i++) {
         keyEnc[i] = s2PetsChars.indexOf(inKey[i]);
     }
 
@@ -111,9 +111,9 @@ function s2PetsDecodeKey(key) {
         //keyDec[dIdx] = (keyEnc[eIdx] >>> (dIdx - 10) & 1 ? keyDec[dIdx] | 1 << (i & 7) : keyDec[dIdx] & ~(1 << (i & 7))) & 0x7F;
         keyInt = keyEnc[eIdx] >>> dIdx & 1 ? keyInt | 1 << i : keyInt & ~(1 << i);
     }
-    for (let i = 0; i < 3; i++) {
-        keyDec[i + 10] = keyInt >>> 8 * i & 0x7F;
-    }
+    //keyDec.push(...intToArr(keyInt, 3));
+    intToArr(intReverse(keyInt, 3), s2PetsDecLen, s2PetsDecLen - 1, keyDec);
+
     // This algorithm has a significant flaw, where it for whatever reason converts first 9 bytes
     // of the decoded key to UTF-16 (putting NULLs after every byte) however it still hashes the
     // first 9 bytes (name + gift id) of the converted key even though it's now 18 bytes large.
@@ -121,11 +121,8 @@ function s2PetsDecodeKey(key) {
     for (let i = 0; i < 5; i++) {
         keyDecConv[i * 2] = keyDec[i];
     }
-    let keyHashCalc = crcCalculate(keyDecConv) & 0x7F7F7F7F;
-    let keyHashStore = 0;
-    for (let i = s2PetsDecLen - 4, shift = 24; i < s2PetsDecLen; i++, shift -= 8) {
-        keyHashStore |= keyDec[i] << shift;
-    }
+    let keyHashCalc = calcCrc32(keyDecConv) & 0x7F7F7F7F;
+    let keyHashStore = arrToInt(keyDec.slice(-4));
     if (keyHashCalc !== keyHashStore) {
         outName.value = "";
         outGiftID.value = "";
@@ -140,12 +137,7 @@ function s2PetsDecodeKey(key) {
     }
     outGiftID.value = keyDec[8];
     outGiftName.value = s2PetsGifts[keyDec[8]];
-
-    let keyName = "";
-    for (let i = 0; i < 8; i++) {
-        keyName += s2PetsChars[keyDec[i]];
-    }
-    outName.value = keyName.trimEnd();
+    outName.value = Array.from(keyDec.slice(0, 8)).map(idx => s2PetsChars[idx]).join("").trimEnd();
 }
 
 function s2PetsEncodeKey() {
@@ -189,11 +181,9 @@ function s2PetsEncodeKey() {
     for (let i = 0; i < 5; i++) {
         keyDecConv[i * 2] = keyDec[i];
     }
-    let keyHash = crcCalculate(keyDecConv);
-    for (let i = s2PetsDecLen - 1; i >= s2PetsDecLen - 4 ; i--) {
-        keyDec[i] = keyHash & 0x7F;
-        keyHash >>>= 8;
-    }
+    let keyHash = calcCrc32(keyDecConv) & 0x7F7F7F7F;
+    intToArr(keyHash, s2PetsDecLen, s2PetsDecLen - 1, keyDec);
+
     // Originally this was a very long routine on PS2 that's been significantly simplified here.
     for (let i = 0, j = 0; i < 2; i++, j += 5) {
         for (let k = 0; k < 7; k++) {
@@ -203,19 +193,11 @@ function s2PetsEncodeKey() {
             }
         }
     }
-    let keyInt = 0;
-    for (let i = s2PetsDecLen - 1; i > s2PetsDecLen - 4; i--) {
-        keyInt <<= 8;
-        keyInt |= keyDec[i];
-    }
+    let keyInt = intReverse(keyHash, 3);
     for (let i = 0; i < 24; i++) {
         let dIdx = parseInt(i / 5);
         let eIdx = i % 5 + 14;
         keyEnc[eIdx] = keyInt >>> i & 1 ? keyEnc[eIdx] | 1 << dIdx : keyEnc[eIdx] & ~(1 << dIdx);
     }
-    let key = "";
-    for (let i = 0; i < s2PetsKeyLen; i++) {
-        key += s2PetsChars[keyEnc[i]];
-    }
-    outKey.value = key.match(/.{1,4}/g).join("-");
+    outKey.value = Array.from(keyEnc).map(idx => s2PetsChars[idx]).join("").match(/.{1,4}/g).join("-");
 }

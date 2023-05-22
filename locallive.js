@@ -1,4 +1,4 @@
-// Written by Edness   2022-09-07 - 2023-05-08
+// Written by Edness   2022-09-07 - 2023-05-22
 
 function toInt(hexStr) {
     const nybbles = 12; // limit is 1<<53 (13.25), but using 1<<48 (12) to be byte aligned,
@@ -29,6 +29,27 @@ function toHex(num, size = 8) {
     return `0x${num.toString(16).padStart(size, "0").toUpperCase()}`;
 }
 
+function arrToInt(arr) {
+    let int = 0n;
+    for (let i = 0; i < arr.length; i++) {
+        int <<= 8n;
+        int |= BigInt(arr[i]);
+    }
+    return arr.length <= 6 ? Number(int) : int;
+}
+
+function intToArr(int, arrLen, arrIdx = arrLen - 1, arr) {
+    int = BigInt(int);
+    if (typeof arr === "undefined") {
+        arr = new Uint8Array(arrLen);
+    }
+    for (; arrIdx >= 0; arrIdx--) {
+        arr[arrIdx] |= Number(int & 0xFFn);
+        int >>= 8n;
+    }
+    return arr;
+}
+
 /*
 // I originally didn't realise TextEncoder had a separate method that automatically
 // allocates a large enough buffer, so I wrote this whole thing to work around it...
@@ -57,6 +78,11 @@ function toStr(strArr) {
 
 function strReverse(str) {
     return str.split("").reverse().join("");
+}
+
+function intReverse(int, intLen) {
+    // was originally called endianReverse but consistency
+    return arrToInt(intToArr(int, intLen).reverse());
 }
 
 function arrCompare(arrLeft, arrRight) {
