@@ -41,22 +41,33 @@
         </form>
         <br>
 
-        <h3>PlayStation 3 Disc Key</h3>
+        <h3>PlayStation 3 Disc Key & Disc ID</h3>
         <p>Dumped and retrieved from PlayStation 3 discs.
 
         <div class="info-table">
-            <p id="about">Converts the PlayStation 3 Data1 key to and from the Disc Key used for decrypting game disc sectors.
+            <p id="about">Converts the PlayStation 3 Data1 key to and from the Disc Key used for decrypting game disc sectors, and the Data2 key to and from the Disc ID.
             <p id="source">
                 <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/redump/PS3DiscKey.js">JS (Live)</a>.
         </div>
         <form>
             <div style="float: left;" class="mt-2 me-2">
                 <h5>Data1</h5>
-                <input class="form-control local-hex-output-128" type="text" value="0x00000000000000000000000000000000" oninput="encryptDkey(this.id)" id="ps3-data1"></input>
+                <input class="form-control local-hex-output-128" type="text" value="0x3E4C6265E08FFCB5B88B76B9229A3F36" oninput="encryptD1Key()" id="ps3-data1"></input>
             </div>
             <div style="float: left;" class="mt-2 me-1">
                 <h5>Disc Key</h5>
-                <input class="form-control local-hex-output-128" type="text" value="0xE855C9AF3B8BE026FD97A7CAD9C3F890" oninput="decryptDkey(this.id)" id="ps3-disc-key"></input>
+                <input class="form-control local-hex-output-128" type="text" value="0x00000000000000000000000000000000" oninput="decryptD1Key()" id="ps3-disc-key"></input>
+           </div>
+        </form>
+        <div style="clear: both;"></div>
+        <form>
+            <div style="float: left;" class="mt-2 me-2">
+                <h5>Data2</h5>
+                <input class="form-control local-hex-output-128" type="text" value="0x04EC7666382555DE33944D947DD64257" oninput="decryptD2ID()" id="ps3-data2"></input>
+            </div>
+            <div style="float: left;" class="mt-2 me-1">
+                <h5>Disc ID</h5>
+                <input class="form-control local-hex-output-128" type="text" value="0x00000000000000000000000000000000" oninput="encryptD2ID()" id="ps3-disc-id"></input>
            </div>
         </form>
         <br><br><br>
