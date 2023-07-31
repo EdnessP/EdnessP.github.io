@@ -1,62 +1,56 @@
 // PS3 Data1 <-> DiscKey / Data2 <-> DiscID AES-128 CBC encryption routine
 // Script is based on publicly available information from the PS3 Dev Wiki
-// Written by Edness   v1.6   2023-01-23 - 2023-07-30
+// Written by Edness   v1.7   2023-01-23 - 2023-07-31
 
-async function decryptKey(elem, outElem, dataKeySetup, dataIvType, fixSubtleCrypto) {
-    const input = intToArr(hexInput(elem, 32), 64, 15);
+async function keySetup(keyData, ivData) {
+    const ivType = {name: "AES-CBC", iv: ivData};
+    const keyType = await window.crypto.subtle.importKey(
+        "raw", keyData, {name: "AES-CBC"}, true, ["encrypt", "decrypt"]
+    );
+    return {keyType: keyType, ivType: ivType};
+}
+
+async function decryptKey(inElem, outElem, keyData, ivData, fixSubtleCrypto) {
+    const input = intToArr(hexInput(inElem, 32), 64, 15);
     const output = document.getElementById(outElem);
     input[47] = fixSubtleCrypto; // See the comment at the end
-    const dataKeyType = await dataKeySetup();
-    let result = await window.crypto.subtle.decrypt(dataIvType, dataKeyType, input);
+    const data = await keySetup(keyData, ivData);
+    let result = await window.crypto.subtle.decrypt(data.ivType, data.keyType, input);
     result = arrToInt(new Uint8Array(result, 0, 16));
     output.value = toHex(result, 32);
 }
 
-async function encryptKey(elem, outElem, dataKeySetup, dataIvType) {
-    const input = intToArr(hexInput(elem, 32), 16);
+async function encryptKey(inElem, outElem, keyData, ivData) {
+    const input = intToArr(hexInput(inElem, 32), 16);
     const output = document.getElementById(outElem);
-    const dataKeyType = await dataKeySetup();
-    let result = await window.crypto.subtle.encrypt(dataIvType, dataKeyType, input);
+    const data = await keySetup(keyData, ivData);
+    let result = await window.crypto.subtle.encrypt(data.ivType, data.keyType, input);
     result = arrToInt(new Uint8Array(result, 0, 16));
     output.value = toHex(result, 32);
-}
-
-async function decryptD1Key() {
-    await decryptKey("ps3-disc-key", "ps3-data1", data1KeySetup, data1IvType, 0xB0);
-}
-
-async function encryptD1Key() {
-    await encryptKey("ps3-data1", "ps3-disc-key", data1KeySetup, data1IvType);
-}
-
-async function decryptD2ID() {
-    await decryptKey("ps3-data2", "ps3-disc-id", data2KeySetup, data2IvType, 0x59);
-}
-
-async function encryptD2ID() {
-    await encryptKey("ps3-disc-id", "ps3-data2", data2KeySetup, data2IvType);
 }
 
 // Data1 <-> DiscKey
 const data1Key = intToArr(0x380BCF0B53455B3C7817AB4FA3BA90EDn, 16);
 const data1Iv = intToArr(0x69474772AF6FDAB342743AEFAA186287n, 16);
 
-const data1IvType = {name: "AES-CBC", iv: data1Iv};
-async function data1KeySetup() {
-    return await window.crypto.subtle.importKey(
-        "raw", data1Key, {name: "AES-CBC"}, true, ["encrypt", "decrypt"]
-    );
+async function decryptD1Key() {
+    await decryptKey("ps3-disc-key", "ps3-data1", data1Key, data1Iv, 0xB0);
+}
+
+async function encryptD1Key() {
+    await encryptKey("ps3-data1", "ps3-disc-key", data1Key, data1Iv);
 }
 
 // Data2 <-> DiscID
 const data2Key = intToArr(0x7CDD0E02076EFE4599B1B82C359919B3n, 16);
 const data2Iv = intToArr(0x2226928D44032F436AFD267E748B2393n, 16);
 
-const data2IvType = {name: "AES-CBC", iv: data2Iv};
-async function data2KeySetup() {
-    return await window.crypto.subtle.importKey(
-        "raw", data2Key, {name: "AES-CBC"}, true, ["encrypt", "decrypt"]
-    );
+async function decryptD2ID() {
+    await decryptKey("ps3-data2", "ps3-disc-id", data2Key, data2Iv, 0x59);
+}
+
+async function encryptD2ID() {
+    await encryptKey("ps3-disc-id", "ps3-data2", data2Key, data2Iv);
 }
 
 /* Original:
@@ -101,15 +95,15 @@ async function bruteforce() {
 }
 
  * Update:
- * Turns out what the 15th index from the end needs to be set to depends on the
+ * Turns out what the 16th index from the end needs to be set to depends on the
  * input key, which I found out from adding Data2 DiscID support.  With the now
- * redone decryption/encryption function calls, they can be bruteforced much a
- * lot more easily like this:
+ * redone decryption/encryption functions, they can be bruteforced a lot more
+ * easily like this:
 
 async function decryptUnk() {
     for (let i = 0; i < 256; i++) {
         try {
-            await decryptKey("in-elem", "out-elem", unkKeySetup, unkIvType, i);
+            await decryptKey("in-elem", "out-elem", unkKey, unkIv, i);
             console.log(i);
         } catch (e) {
             continue;
