@@ -2,7 +2,7 @@
 
 // Written by Edness   v1.5   2022-09-25 - 2023-05-08
 
-const picMaxLength = 0xC4 * 2; // Up to triple layer pressed BDs
+const picMaxLength = 0xC4 * 2; // Up to triple layer pressed BDs;  0x4*2 + 0x40*2 * layers
 
 function picReadConstInfo(pic) {
     let picConst = {};

@@ -21,6 +21,24 @@
         <p>Tools related to working with data on <a href="http://redump.org/">Redump.org</a>.
         <div id="load-toc"></div>
 
+        <h3>Physical Format Information & Security Sectors</h3>
+        <p>Dumped and retrieved from DVD and XGD format discs.
+
+        <div class="info-table">
+            <p id="about">Parses the Physical Format Information (PFI) and Security Sector (SS) hexdumps retrieved from pressed DVD-ROM and XGD discs.
+            <p id="source">
+                <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/redump/PFIparse.js">JS (Live)</a>.
+        </div>
+        <form class="d-flex">
+            <textarea class="form-control my-2 me-2 local-pfi-input" type="text" placeholder="PFI/SS data input" oninput="parsePfi()" id="pfi-parse-input"></textarea>
+            <textarea class="form-control my-2 me-1" type="text" placeholder="PFI/SS data output" id="pfi-parse-output" readonly></textarea>
+        </form>
+        <form>
+            <input type="checkbox" id="pfi-parse-verbose" onchange="parsePfi()">
+            <label for="pfi-parse-verbose">Verbose output</label>
+        </form>
+        <br>
+
         <h3>Permanent Information & Control</h3>
         <p>Dumped and retrieved from Blu-Ray discs.
 
@@ -78,6 +96,7 @@
 <script type="text/javascript" src="/localscript.js"></script>
 <script type="text/javascript" src="/locallive.js"></script>
 
+<script type="text/javascript" src="/live/redump/PFIparse.js"></script>
 <script type="text/javascript" src="/live/redump/PICparse.js"></script>
 <script type="text/javascript" src="/live/redump/PS3DiscKey.js"></script>
 </html>

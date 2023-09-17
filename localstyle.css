@@ -117,6 +117,15 @@ textarea {
     height: 14em;
 }
 
+.local-pfi-input {
+    vertical-align: middle;
+    font-family: monospace;
+    overflow: hidden;
+    line-height: 1em;
+    max-width: 35ch;
+    height: 6em;
+}
+
 .local-min {
     width: 0px;
 }
