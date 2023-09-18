@@ -17,6 +17,10 @@ function parsePfi() {
     let pfi = new HexReader(pfiData);
     let pfiOutput = "";
 
+    if (pfiData.length < 0x4 * 2) {
+        output.value = "";
+        return;
+    }
     if (pfiData.length < 0xC * 2) {
         pfiOutput += "Warning: PFI data too short!\n"
     }
