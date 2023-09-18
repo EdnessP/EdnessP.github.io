@@ -1,36 +1,32 @@
 // Parses and prints DVD Physical Format Information (PFI) and XGD Security Sector (SS) data
 
-// Written by Edness   v1.2   2023-09-18
+// Written by Edness   v1.3   2023-09-18
 
 const pfiMaxLength = 0x10 * 2; // Up to dual layer
 
 function parsePfi() {
-    let input = document.getElementById("pfi-parse-input");
-    let output = document.getElementById("pfi-parse-output");
-    let verbose = document.querySelector("#pfi-parse-verbose").checked;
-
-    let pfiData = input.value.toUpperCase().replace(/(\r|\n|\s)/g, "").replace(/[^0-9A-F]/g, "0").slice(0, pfiMaxLength);
-    let curPos = input.selectionStart;
-    input.value = pfiData;
-    input.setSelectionRange(curPos, curPos);
+    const pfiData = hexField("pfi-parse-input", pfiMaxLength);
+    const output = document.getElementById("pfi-parse-output");
+    const verbose = document.querySelector("#pfi-parse-verbose").checked;
 
     if (pfiData.length < 0x4 * 2) {
         output.value = "";
         return;
     }
 
-    let pfi = new HexReader(pfiData);
+    const pfi = new HexReader(pfiData);
     let pfiOutput = "";
+
     if (pfiData.length < 0xC * 2) {
-        pfiOutput += "Warning: PFI data too short!\n"
+        pfiOutput += "Warning: PFI data too short!\n";
     }
 
     pfi.seek(0x4); // Maybe add some warnings if this has bad data?
     // If layer end is empty, end diff is calculated for the size
     // otherwise end diff determines the size difference for L1
-    let pfiStart = pfi.readInt(0x4);
-    let pfiEndDiff = pfi.readInt(0x4);
-    let pfiEndLayer = pfi.readInt(0x4);
+    const pfiStart = pfi.readInt(0x4);
+    const pfiEndDiff = pfi.readInt(0x4);
+    const pfiEndLayer = pfi.readInt(0x4);
 
     let totalSize = 0;
     if (!pfiEndLayer) { // Single Layer PFI

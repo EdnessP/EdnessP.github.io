@@ -25,6 +25,15 @@ function hexInput(elem, size) {
     return toInt(strFix);
 }
 
+function hexField(elem, size) {
+    const input = document.getElementById(elem);
+    const strFix = input.value.toUpperCase().replace(/(\r|\n|\s)/g, "").replace(/[^0-9A-F]/g, "0").slice(0, size);
+    const curPos = input.selectionStart;
+    input.value = strFix;
+    input.setSelectionRange(curPos, curPos);
+    return strFix;
+}
+
 function toHex(num, size = 8) {
     return `0x${num.toString(16).padStart(size, "0").toUpperCase()}`;
 }
