@@ -1,4 +1,4 @@
-// Written by Edness   2022-09-07 - 2023-05-22
+// Written by Edness   2022-09-07 - 2023-09-18
 
 function toInt(hexStr) {
     const nybbles = 12; // limit is 1<<53 (13.25), but using 1<<48 (12) to be byte aligned,
