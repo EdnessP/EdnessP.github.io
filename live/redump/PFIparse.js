@@ -1,8 +1,8 @@
 // Parses and prints DVD Physical Format Information (PFI) and XGD Security Sector (SS) data
 
-// Written by Edness   v1.1   2023-09-18
+// Written by Edness   v1.2   2023-09-18
 
-const pfiMaxLength = 0x50 * 2; // 0x10*2, up to dual layer, but setting to 5 lines for alignment
+const pfiMaxLength = 0x10 * 2; // Up to dual layer
 
 function parsePfi() {
     let input = document.getElementById("pfi-parse-input");
@@ -17,7 +17,11 @@ function parsePfi() {
     let pfi = new HexReader(pfiData);
     let pfiOutput = "";
 
-    pfi.seek(0x4); // maybe add some warnings if this has bad data?
+    if (pfiData.length < 0xC * 2) {
+        pfiOutput += "Warning: PFI data too short!\n"
+    }
+
+    pfi.seek(0x4); // Maybe add some warnings if this has bad data?
     // If layer end is empty, end diff is calculated for the size
     // otherwise end diff determines the size difference for L1
     let pfiStart = pfi.readInt(0x4);
