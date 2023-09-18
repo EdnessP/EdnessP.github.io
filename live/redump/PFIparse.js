@@ -14,13 +14,13 @@ function parsePfi() {
     input.value = pfiData;
     input.setSelectionRange(curPos, curPos);
 
-    let pfi = new HexReader(pfiData);
-    let pfiOutput = "";
-
     if (pfiData.length < 0x4 * 2) {
         output.value = "";
         return;
     }
+
+    let pfi = new HexReader(pfiData);
+    let pfiOutput = "";
     if (pfiData.length < 0xC * 2) {
         pfiOutput += "Warning: PFI data too short!\n"
     }
