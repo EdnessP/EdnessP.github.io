@@ -1,4 +1,4 @@
-// Written by Edness   2022-09-07 - 2023-09-18
+// Written by Edness   2022-09-07 - 2023-11-03
 
 function toInt(hexStr) {
     const nybbles = 12; // limit is 1<<53 (13.25), but using 1<<48 (12) to be byte aligned,
@@ -25,13 +25,20 @@ function hexInput(elem, size) {
     return toInt(strFix);
 }
 
-function hexField(elem, size) {
+function hexField(elem, size, hdrSkip = "") {
     const input = document.getElementById(elem);
-    const strFix = input.value.toUpperCase().replace(/(\r|\n|\s)/g, "").replace(/[^0-9A-F]/g, "0").slice(0, size);
+    let strFix = input.value.toUpperCase().replace(/[\r\n\s]/g, "").replace(/[^0-9A-F]/g, "0");
+    // hdrSkip allows skipping optional 0x802 (PFI) or 0x1002 (PIC) size headers
+    let hdrSkipped = strFix.startsWith(hdrSkip);
+    if (hdrSkipped) {
+        size += hdrSkip.length;
+    }
+    strFix = strFix.slice(0, size);
     const curPos = input.selectionStart;
     input.value = strFix;
     input.setSelectionRange(curPos, curPos);
-    return strFix;
+    // while the hdrSkip remains visible on the page, internally it's removed
+    return strFix.slice(hdrSkipped ? hdrSkip.length : 0);
 }
 
 function toHex(num, size = 8) {
@@ -91,6 +98,7 @@ function strReverse(str) {
 
 function intReverse(int, intLen) {
     // was originally called endianReverse but consistency
+    // (and yes ik this is inefficient but variable sizes)
     return arrToInt(intToArr(int, intLen).reverse());
 }
 

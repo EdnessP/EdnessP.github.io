@@ -1,8 +1,8 @@
 // Parses and prints Blu-ray Permanent Information & Control (PIC) data
 
-// Written by Edness   v1.6.1   2022-09-25 - 2023-10-27
+// Written by Edness   v1.7   2022-09-25 - 2023-11-03
 
-const picMaxLength = 0xC4 * 2; // Up to triple layer pressed BDs;  (0x4 + 0x40 * layers) * 2
+const picMaxLength = 0xC0 * 2; // Up to triple layer pressed BDs;  (0x40 * layers) * 2
 
 function picReadConstInfo(pic) {
     let picConst = {};
@@ -13,7 +13,7 @@ function picReadConstInfo(pic) {
 }
 
 function parsePic() {
-    const picData = hexField("pic-parse-input", picMaxLength);
+    const picData = hexField("pic-parse-input", picMaxLength, "10020000");
     const output = document.getElementById("pic-parse-output");
     const verbose = document.querySelector("#pic-parse-verbose").checked;
 
@@ -23,7 +23,6 @@ function parsePic() {
 
     let totalSize = 0;
     let layerbreak = [0];
-    pic.seek(pic.readStr(0x2) !== "DI" ? 0x4 : 0x0);
     while (pic.tell() < picData.length && pic.readStr(0x2) === "DI") {
         pic.seek(0x3, 1);
         let layer = pic.readInt(0x1);

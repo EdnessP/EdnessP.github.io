@@ -1,6 +1,6 @@
 // Parses and prints DVD Physical Format Information (PFI) and XGD Security Sector (SS) data
 
-// Written by Edness   v1.4   2023-09-18
+// Written by Edness   v1.5   2023-09-18 - 2023-11-03
 
 const pfiMaxLength = 0x10 * 2; // Up to dual layer
 let pfiSsComboParse = false; // toggle via console for now
@@ -11,7 +11,7 @@ function parsePfi() {
 }
 
 function parsePfiSingle() {
-    const pfiData = hexField("pfi-parse-input", pfiMaxLength);
+    const pfiData = hexField("pfi-parse-input", pfiMaxLength, "08020000");
     const output = document.getElementById("pfi-parse-output");
     const verbose = document.querySelector("#pfi-parse-verbose").checked;
 
