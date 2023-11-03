@@ -29,7 +29,7 @@ function hexField(elem, size, hdrSkip = "") {
     const input = document.getElementById(elem);
     let strFix = input.value.toUpperCase().replace(/[\r\n\s]/g, "").replace(/[^0-9A-F]/g, "0");
     // hdrSkip allows skipping optional 0x802 (PFI) or 0x1002 (PIC) size headers
-    let hdrSkipped = strFix.startsWith(hdrSkip);
+    const hdrSkipped = hdrSkip.length && strFix.startsWith(hdrSkip);
     if (hdrSkipped) {
         size += hdrSkip.length;
     }
