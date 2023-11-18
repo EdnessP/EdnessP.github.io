@@ -1,4 +1,4 @@
-// Written by Edness   2022-09-07 - 2023-11-03
+// Written by Edness   2022-09-07 - 2023-11-18
 
 function toInt(hexStr) {
     const nybbles = 12; // limit is 1<<53 (13.25), but using 1<<48 (12) to be byte aligned,
@@ -64,6 +64,11 @@ function intToArr(int, arrLen, arrIdx = arrLen - 1, arr) {
         int >>= 8n;
     }
     return arr;
+}
+
+function signExtend(int, bits) {
+    bits = 32 - bits;
+    return int << bits >> bits;
 }
 
 /*

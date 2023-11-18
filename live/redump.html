@@ -30,16 +30,17 @@
                 <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/redump/PFIparse.js">JS (Live)</a>.
         </div>
         <form class="d-flex">
-            <textarea class="form-control my-2 me-2 local-pfi-input" type="text" placeholder="PFI/SS data input" oninput="parsePfi()" id="pfi-parse-input"></textarea>
+            <div id="pfi-combo-parse-input">
+                <textarea class="form-control my-2 me-2 local-pfi-input" type="text" placeholder="PFI/SS data input" oninput="parsePfi()" id="pfi-parse-input"></textarea>
+            <!--<textarea class="form-control my-2 me-2 local-pfi-input" type="text" placeholder="PFI/SS data input" oninput="parsePfi()" id="pfi-combo-input"></textarea>-->
+            </div>
             <textarea class="form-control my-2 me-1" type="text" placeholder="PFI/SS data output" id="pfi-parse-output" readonly></textarea>
         </form>
         <form>
             <input type="checkbox" id="pfi-parse-verbose" onchange="parsePfi()">
             <label class="pe-2" for="pfi-parse-verbose">Verbose output</label>
-            <!-- toggle via console for now  (pfiSsComboParse = true)
-            <input type="checkbox" id="pfi-ss-combo-parse" onchange="parsePfi()">
-            <label for="pfi-ss-combo-parse">Combined PFI+SS input (16 bytes each)</label>
-            -->
+            <input type="checkbox" id="pfi-combo-parse" onchange="pfiComboToggle()">
+            <label for="pfi-combo-parse">Combined PFI input</label>
         </form>
         <br>
 

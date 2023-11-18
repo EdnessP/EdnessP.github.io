@@ -118,12 +118,22 @@ textarea {
 }
 
 .local-pfi-input {
-    vertical-align: middle;
     font-family: monospace;
     overflow: hidden;
     line-height: 1em;
     max-width: 35ch;
+    min-width: 35ch;
     height: 6em;
+}
+
+.local-pfi-combo-input {
+    font-family: monospace;
+    overflow: hidden;
+    line-height: 1em;
+    max-width: 35ch;
+ /* this is horrible on mobile, but oh well */
+    min-width: 35ch;
+    height: 3em;
 }
 
 .local-min {

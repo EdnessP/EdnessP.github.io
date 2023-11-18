@@ -1,114 +1,157 @@
 // Parses and prints DVD Physical Format Information (PFI) and XGD Security Sector (SS) data
 
-// Written by Edness   v1.5   2023-09-18 - 2023-11-03
+// Written by Edness   v1.6   2023-09-18 - 2023-11-18
 
 const pfiMaxLength = 0x10 * 2; // Up to dual layer
-let pfiSsComboParse = false; // toggle via console for now
 
-function parsePfi() {
-    pfiSsComboParse ? parsePfiCombo() : parsePfiSingle();
-    //document.querySelector("#pfi-ss-combo-parse").checked ? parsePfiCombo() : parsePfiSingle();
+function pfiComboToggle() {
+    const combo = document.querySelector("#pfi-combo-parse").checked;
+
+    if (combo) {
+        // allows for 2 separate PFIs to be calculated together
+        // PS2 DVD-9 PFI and Xbox/X360 XGD PFI+SS combinations
+        const field = document.getElementById("pfi-combo-parse-input");
+        const input = document.getElementById("pfi-parse-input");
+        input.classList.remove("local-pfi-input");
+        input.classList.add("local-pfi-combo-input");
+
+        const clone = input.cloneNode();
+        clone.id = "pfi-combo-input";
+        clone.value = "";
+        field.appendChild(clone);
+    } else {
+        document.getElementById("pfi-combo-input").remove();
+        const input = document.getElementById("pfi-parse-input");
+        input.classList.remove("local-pfi-combo-input");
+        input.classList.add("local-pfi-input");
+    }
+    parsePfi();
 }
 
-function parsePfiSingle() {
-    const pfiData = hexField("pfi-parse-input", pfiMaxLength, "08020000");
-    const output = document.getElementById("pfi-parse-output");
-    const verbose = document.querySelector("#pfi-parse-verbose").checked;
+function parsePfi() {
+    document.querySelector("#pfi-combo-parse").checked ? parsePfiCombo() : parsePfiSingle();
+}
 
-    if (pfiData.length < 0x4 * 2) {
-        output.value = "";
-        return;
+function parsePfiData(elem, idx = "") {
+    const input = hexField(elem, pfiMaxLength, "08020000");
+
+    const pfiData = new Object();
+
+    if (input.length < 0x4 * 2) {
+        return pfiData;
     }
 
-    const pfi = new HexReader(pfiData);
-    let pfiOutput = "";
+    pfiData.output = "";
 
-    if (pfiData.length < 0xC * 2) {
-        pfiOutput += "Warning: PFI data too short!\n";
+    if (input.length < 0xC * 2) {
+        if (idx.toString().length) { idx = " " + idx; }
+        pfiData.output += `Warning: PFI${idx} data is too short!\n`;
     }
+
+    const pfi = new HexReader(input);
 
     pfi.seek(0x4); // Maybe add some warnings if this has bad data?
     // If layer end is empty, end diff is calculated for the size
     // otherwise end diff determines the size difference for L1
-    const pfiStart = pfi.readInt(0x4);
-    const pfiEndDiff = pfi.readInt(0x4);
-    const pfiEndLayer = pfi.readInt(0x4);
+    pfiData.start = pfi.readInt(0x4);
+    pfiData.endDiff = pfi.readInt(0x4);
+    pfiData.endLayer = pfi.readInt(0x4);
 
-    let totalSize = 0;
-    if (!pfiEndLayer) { // Single Layer PFI
-        let layerSize = pfiEndDiff + 1 - pfiStart;
-        totalSize += layerSize;
-        pfiOutput += verbose
-            ? `Layer 0 - Start: ${toHex(pfiStart)} - End: ${toHex(pfiEndDiff)} - Size: ${toHex(layerSize)} (${layerSize} sectors, ${layerSize * 2048} bytes)\n`
-            : `Layer 0 - Size: ${layerSize} sectors, ${layerSize * 2048} bytes\n`;
-    } else { // Dual Layer PFI/SS
-        let layer0Size = pfiEndLayer + 1 - pfiStart;
-        let layer1Size = layer0Size + (pfiEndDiff + 1 << 8 >> 8) + pfiStart;
-        totalSize += layer0Size + layer1Size;
-        pfiOutput += verbose
-            ? `Layer 0 - Start: ${toHex(pfiStart)} - End: ${toHex(pfiEndLayer)} - Size: ${toHex(layer0Size)} (${layer0Size} sectors, ${layer0Size * 2048} bytes)\n`
-            + `Layer 1 - Difference from Layer 0: ${toHex(pfiEndDiff)} - Size: ${toHex(layer1Size)} (${layer1Size} sectors, ${layer1Size * 2048} bytes)\n`
-            : `Layer 0 - Size: ${layer0Size} sectors, ${layer0Size * 2048} bytes\n`
-            + `Layer 1 - Size: ${layer1Size} sectors, ${layer1Size * 2048} bytes\n`;
-        //pfiOutput += `Layerbreak: ${layer0Size}`;
-    }
-    pfiOutput += verbose
-        ? `Total size: ${toHex(totalSize)} (${totalSize} sectors, ${totalSize * 2048} bytes)`
-        : `Total size: ${totalSize} sectors, ${totalSize * 2048} bytes`;
-    output.value = pfiOutput;
+    return pfiData;
 }
 
-function parsePfiCombo() {
-    const pfiData = hexField("pfi-parse-input", pfiMaxLength * 2);
+function parsePfiSingle() {
+    const pfiData = parsePfiData("pfi-parse-input");
     const output = document.getElementById("pfi-parse-output");
     const verbose = document.querySelector("#pfi-parse-verbose").checked;
 
-    if (pfiData.length < 0x14 * 2) {
+    if (!Object.keys(pfiData).length) {
         output.value = "";
         return;
     }
 
-    const pfi = new HexReader(pfiData);
-    let pfiOutput = "";
+    let totalSize = 0;
+    if (!pfiData.endLayer) { // Single Layer PFI
+        const layerSize = pfiData.endDiff + 1 - pfiData.start;
+        totalSize += layerSize;
+        pfiData.output += verbose
+            ? `Layer 0 - Start: ${toHex(pfiData.start)} - End: ${toHex(pfiData.endDiff)} - Size: ${toHex(layerSize)} (${layerSize} sectors, ${layerSize * 2048} bytes)\n`
+            : `Layer 0 - Size: ${layerSize} sectors, ${layerSize * 2048} bytes\n`;
+    } else { // Dual Layer PFI/SS
+        const layer0Size = pfiData.endLayer + 1 - pfiData.start;
+        const layer1Size = layer0Size + signExtend(pfiData.endDiff + 1, 24) + pfiData.start;
+        totalSize += layer0Size + layer1Size;
+        pfiData.output += verbose
+            ? `Layer 0 - Start: ${toHex(pfiData.start)} - End: ${toHex(pfiData.endLayer)} - Size: ${toHex(layer0Size)} (${layer0Size} sectors, ${layer0Size * 2048} bytes)\n`
+            + `Layer 1 - Difference from Layer 0: ${toHex(pfiData.endDiff)} - Size: ${toHex(layer1Size)} (${layer1Size} sectors, ${layer1Size * 2048} bytes)\n`
+            : `Layer 0 - Size: ${layer0Size} sectors, ${layer0Size * 2048} bytes\n`
+            + `Layer 1 - Size: ${layer1Size} sectors, ${layer1Size * 2048} bytes\n`;
+        //pfiData.output += `Layerbreak: ${layer0Size}`;
+    }
 
-    /*if (pfiData.length < 0x10 * 2) {
-        pfiOutput += "Warning: PFI data too short!\n";
-    } else if (pfiData.length < 0x20 * 2) {
-        pfiOutput += "Warning: SS data too short!\n";
-    }*/
+    if (totalSize) {
+        pfiData.output += verbose
+            ? `Total size: ${toHex(totalSize)} (${totalSize} sectors, ${totalSize * 2048} bytes)`
+            : `Total size: ${totalSize} sectors, ${totalSize * 2048} bytes`;
+    }
+    output.value = pfiData.output;
+}
 
-    pfi.seek(0x4);
-    const pfiStart = pfi.readInt(0x4);
-    const pfiEndDiff = pfi.readInt(0x4);
-    const pfiEndLayer = pfi.readInt(0x4);
-    pfi.seek(0x14);
-    const ssStart = pfi.readInt(0x4);
-    const ssEndDiff = pfi.readInt(0x4);
-    const ssEndLayer = pfi.readInt(0x4);
+function parsePfiCombo() {
+    const pfi0Data = parsePfiData("pfi-parse-input", 0);
+    const pfi1Data = parsePfiData("pfi-combo-input", 1);
+    const output = document.getElementById("pfi-parse-output");
+    const verbose = document.querySelector("#pfi-parse-verbose").checked;
 
-    const pfiL0 = pfiEndLayer + 1 - pfiStart;
-    const pfiL1 = pfiL0 + (pfiEndDiff + 1 << 8 >> 8) + pfiStart;
-    const pfiSize = pfiL0 + pfiL1;
+    if (!Object.keys(pfi0Data).length || !Object.keys(pfi1Data).length) {
+        output.value = "";
+        return;
+    }
 
-    const ssL0 = ssEndLayer + 1 - ssStart;
-    const ssL1 = ssL0 + (ssEndDiff + 1 << 8 >> 8) + ssStart;
-    const ssSize = ssL0 + ssL1;
+    let pfiOutput = pfi0Data.output + pfi1Data.output;
 
-    const padL0 = ssStart - 1 - pfiEndLayer;
-    const padL1 = padL0 + ssL0 - ssL1;
-    const padSize = padL0 + padL1;
+    let totalSize = 0;
+    if (!pfi0Data.endLayer && !pfi1Data.endLayer) { // SL+SL (PS2 DVD-9 PFI)
+        const layer0Size = pfi0Data.endDiff + 1 - pfi0Data.start;
+        const layer1Size = pfi1Data.endDiff + 1 - pfi1Data.start;
+        totalSize += layer0Size + layer1Size;
 
-    const totalSize = pfiSize + ssSize + padSize;
-    const layer0Size = pfiL0 + padL0 + ssL0;
-    const layer1Size = ssL1 + padL1 + pfiL1;
+        pfiOutput += verbose
+            ? `Layer 0 - Start: ${toHex(pfi0Data.start)} - End: ${toHex(pfi0Data.endDiff)} - Size: ${toHex(layer0Size)} (${layer0Size} sectors, ${layer0Size * 2048} bytes)\n`
+            + `Layer 1 - Start: ${toHex(pfi1Data.start)} - End: ${toHex(pfi1Data.endDiff)} - Size: ${toHex(layer1Size)} (${layer1Size} sectors, ${layer1Size * 2048} bytes)\n`
+            : `Layer 0 - Size: ${layer0Size} sectors, ${layer0Size * 2048} bytes\n`
+            + `Layer 1 - Size: ${layer1Size} sectors, ${layer1Size * 2048} bytes\n`;
+    }
+    else if (pfi0Data.endLayer && pfi1Data.endLayer) { // DL+DL (XGD PFI+SS)
+        const pfi0L0 = pfi0Data.endLayer + 1 - pfi0Data.start;
+        const pfi0L1 = pfi0L0 + signExtend(pfi0Data.endDiff + 1, 24) + pfi0Data.start;
+        const pfi0Size = pfi0L0 + pfi0L1;
 
-    pfiOutput += verbose
-        ? `Layer 0 - Start: ${toHex(pfiStart)}/${toHex(ssStart)} - End: ${toHex(pfiEndLayer)}/${toHex(ssEndLayer)} - Size: ${toHex(layer0Size)} (${layer0Size} sectors, ${layer0Size * 2048} bytes)\n`
-        + `Layer 1 - Difference from Layer 0: ${toHex(pfiEndDiff)}/${toHex(ssEndDiff)} - Size: ${toHex(layer1Size)} (${layer1Size} sectors, ${layer1Size * 2048} bytes)\n`
-        +`Total size: ${toHex(totalSize)} (${totalSize} sectors, ${totalSize * 2048} bytes)`
-        : `Layer 0 - Size: ${layer0Size} sectors, ${layer0Size * 2048} bytes\n`
-        + `Layer 1 - Size: ${layer1Size} sectors, ${layer1Size * 2048} bytes\n`
-        + `Total size: ${totalSize} sectors, ${totalSize * 2048} bytes`;
+        const pfi1L0 = pfi1Data.endLayer + 1 - pfi1Data.start;
+        const pfi1L1 = pfi1L0 + signExtend(pfi1Data.endDiff + 1, 24) + pfi1Data.start;
+        const pfi1Size = pfi1L0 + pfi1L1;
 
+        const padL0 = pfi1Data.start - 1 - pfi0Data.endLayer;
+        const padL1 = padL0 + pfi1L0 - pfi1L1;
+        const padSize = padL0 + padL1;
+
+        totalSize += pfi0Size + pfi1Size + padSize;
+        const layer0Size = pfi0L0 + padL0 + pfi1L0;
+        const layer1Size = pfi1L1 + padL1 + pfi0L1;
+
+        pfiOutput += verbose
+            ? `Layer 0 - Start: ${toHex(pfi0Data.start)}/${toHex(pfi1Data.start)} - End: ${toHex(pfi0Data.endLayer)}/${toHex(pfi1Data.endLayer)} - Size: ${toHex(layer0Size)} (${layer0Size} sectors, ${layer0Size * 2048} bytes)\n`
+            + `Layer 1 - Difference from Layer 0: ${toHex(pfi0Data.endDiff)}/${toHex(pfi1Data.endDiff)} - Size: ${toHex(layer1Size)} (${layer1Size} sectors, ${layer1Size * 2048} bytes)\n`
+            : `Layer 0 - Size: ${layer0Size} sectors, ${layer0Size * 2048} bytes\n`
+            + `Layer 1 - Size: ${layer1Size} sectors, ${layer1Size * 2048} bytes\n`;
+    } else {
+        pfiOutput += "Error: Invalid PFI combination!";
+    }
+
+    if (totalSize) {
+        pfiOutput += verbose
+            ? `Total size: ${toHex(totalSize)} (${totalSize} sectors, ${totalSize * 2048} bytes)`
+            : `Total size: ${totalSize} sectors, ${totalSize * 2048} bytes`;
+    }
     output.value = pfiOutput;
 }

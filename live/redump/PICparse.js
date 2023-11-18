@@ -1,11 +1,11 @@
 // Parses and prints Blu-ray Permanent Information & Control (PIC) data
 
-// Written by Edness   v1.7   2022-09-25 - 2023-11-03
+// Written by Edness   v1.7.1   2022-09-25 - 2023-11-18
 
 const picMaxLength = 0xC0 * 2; // Up to triple layer pressed BDs;  (0x40 * layers) * 2
 
 function picReadConstInfo(pic) {
-    let picConst = {};
+    const picConst = new Object();
     picConst.totalLayers = pic.readInt(0x1) >> 4;
     pic.seek(0x7, 1);
     picConst.totalSectors = pic.readInt(0x4) - 1;
