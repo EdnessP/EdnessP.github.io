@@ -145,7 +145,7 @@ function parsePfiCombo() {
             : `Layer 0 - Size: ${layer0Size} sectors, ${layer0Size * 2048} bytes\n`
             + `Layer 1 - Size: ${layer1Size} sectors, ${layer1Size * 2048} bytes\n`;
     } else {
-        pfiOutput += "Error: Invalid PFI combination!";
+        pfiOutput += "Error: Invalid PFI combination! Both fields need to be either single layer (PS2 DVD-9) or dual layer (XGD PFI+SS).";
     }
 
     if (totalSize) {
