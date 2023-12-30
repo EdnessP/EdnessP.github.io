@@ -119,6 +119,23 @@
         </form>
         <br>
 
+        <h3>Epic Mickey</h3>
+        <p>A string hashing algorithm used in Epic Mickey.
+
+        <h4>String Hashing</h4>
+        <div class="info-table">
+            <p id="about">A 32-bit string hashing algorithm used for looking up strings by their hashed label in Epic Mickey. The 2nd hexadecimal field takes an input of the unique ID as a hash seed present at offset 8 of each of the language .DCT dictionary files.
+            <p id="source">
+                <a href="https://github.com/EdnessP/scripts/blob/main/other/epic_mickey_hash.py">Py (Standalone)</a>,
+                <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/EpicMickeyHash.js">JS (Live)</a>.
+        </div>
+        <form class="d-flex">
+            <input class="form-control mt-2 me-2 local-hex-output" type="text" value="0xBD49D10D" id="epic-mickey-hash-output" readonly>
+            <input class="form-control mt-2 me-2 local-hex-output" type="text" value="0x00000000" oninput="epicMickeyHash()" id="epic-mickey-id-input">
+            <input class="form-control mt-2 me-1" type="text" placeholder="String input" oninput="epicMickeyHash()" id="epic-mickey-hash-input">
+        </form>
+        <br>
+
         <h3>Jak & Daxter</h3>
         <p>A string compression algorithm used in Jak 3 and Jak X: Combat Racing.
 
@@ -314,6 +331,7 @@
 <script type="text/javascript" src="/live/strings/BullyHash.js"></script>
 <script type="text/javascript" src="/live/strings/BullyAE_encryption.js"></script>
 <script type="text/javascript" src="/live/strings/codfh_hash.js"></script>
+<script type="text/javascript" src="/live/strings/EpicMickeyHash.js"></script>
 <script type="text/javascript" src="/live/strings/GtHash.js"></script>
 <script type="text/javascript" src="/live/strings/GtID.js"></script>
 <script type="text/javascript" src="/live/strings/Jak3X_VAGDIR.js"></script>
