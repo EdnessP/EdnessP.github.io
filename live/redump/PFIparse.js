@@ -1,6 +1,6 @@
 // Parses and prints DVD Physical Format Information (PFI) and XGD Security Sector (SS) data
 
-// Written by Edness   v1.6   2023-09-18 - 2023-11-18
+// Written by Edness   v1.7   2023-09-18 - 2024-01-02
 
 const pfiMaxLength = 0x10 * 2; // Up to dual layer
 
@@ -53,9 +53,9 @@ function parsePfiData(elem, idx = "") {
     pfi.seek(0x4); // Maybe add some warnings if this has bad data?
     // If layer end is empty, end diff is calculated for the size
     // otherwise end diff determines the size difference for L1
-    pfiData.start = pfi.readInt(0x4);
-    pfiData.endDiff = pfi.readInt(0x4);
-    pfiData.endLayer = pfi.readInt(0x4);
+    pfiData.start = signExtend(pfi.readInt(0x4), 24);
+    pfiData.endDiff = signExtend(pfi.readInt(0x4), 24);
+    pfiData.endLayer = signExtend(pfi.readInt(0x4), 24);
 
     return pfiData;
 }
@@ -79,7 +79,7 @@ function parsePfiSingle() {
             : `Layer 0 - Size: ${layerSize} sectors, ${layerSize * 2048} bytes\n`;
     } else { // Dual Layer PFI/SS
         const layer0Size = pfiData.endLayer + 1 - pfiData.start;
-        const layer1Size = layer0Size + signExtend(pfiData.endDiff + 1, 24) + pfiData.start;
+        const layer1Size = layer0Size + pfiData.endDiff + 1 + pfiData.start;
         totalSize += layer0Size + layer1Size;
         pfiData.output += verbose
             ? `Layer 0 - Start: ${toHex(pfiData.start)} - End: ${toHex(pfiData.endLayer)} - Size: ${toHex(layer0Size)} (${layer0Size} sectors, ${layer0Size * 2048} bytes)\n`
@@ -124,11 +124,11 @@ function parsePfiCombo() {
     }
     else if (pfi0Data.endLayer && pfi1Data.endLayer) { // DL+DL (XGD PFI+SS)
         const pfi0L0 = pfi0Data.endLayer + 1 - pfi0Data.start;
-        const pfi0L1 = pfi0L0 + signExtend(pfi0Data.endDiff + 1, 24) + pfi0Data.start;
+        const pfi0L1 = pfi0L0 + pfi0Data.endDiff + 1 + pfi0Data.start;
         const pfi0Size = pfi0L0 + pfi0L1;
 
         const pfi1L0 = pfi1Data.endLayer + 1 - pfi1Data.start;
-        const pfi1L1 = pfi1L0 + signExtend(pfi1Data.endDiff + 1, 24) + pfi1Data.start;
+        const pfi1L1 = pfi1L0 + pfi1Data.endDiff + 1 + pfi1Data.start;
         const pfi1Size = pfi1L0 + pfi1L1;
 
         const padL0 = pfi1Data.start - 1 - pfi0Data.endLayer;
