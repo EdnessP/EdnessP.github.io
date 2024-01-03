@@ -1,6 +1,6 @@
 // Parses and prints DVD Physical Format Information (PFI) and XGD Security Sector (SS) data
 
-// Written by Edness   v1.7   2023-09-18 - 2024-01-02
+// Written by Edness   v1.7.1   2023-09-18 - 2024-01-03
 
 const pfiMaxLength = 0x10 * 2; // Up to dual layer
 
@@ -75,15 +75,15 @@ function parsePfiSingle() {
         const layerSize = pfiData.endDiff + 1 - pfiData.start;
         totalSize += layerSize;
         pfiData.output += verbose
-            ? `Layer 0 - Start: ${toHex(pfiData.start)} - End: ${toHex(pfiData.endDiff)} - Size: ${toHex(layerSize)} (${layerSize} sectors, ${layerSize * 2048} bytes)\n`
+            ? `Layer 0 - Start: ${toHex(pfiData.start, 8, 6)} - End: ${toHex(pfiData.endDiff, 8, 6)} - Size: ${toHex(layerSize)} (${layerSize} sectors, ${layerSize * 2048} bytes)\n`
             : `Layer 0 - Size: ${layerSize} sectors, ${layerSize * 2048} bytes\n`;
     } else { // Dual Layer PFI/SS
         const layer0Size = pfiData.endLayer + 1 - pfiData.start;
         const layer1Size = layer0Size + pfiData.endDiff + 1 + pfiData.start;
         totalSize += layer0Size + layer1Size;
         pfiData.output += verbose
-            ? `Layer 0 - Start: ${toHex(pfiData.start)} - End: ${toHex(pfiData.endLayer)} - Size: ${toHex(layer0Size)} (${layer0Size} sectors, ${layer0Size * 2048} bytes)\n`
-            + `Layer 1 - Difference from Layer 0: ${toHex(pfiData.endDiff)} - Size: ${toHex(layer1Size)} (${layer1Size} sectors, ${layer1Size * 2048} bytes)\n`
+            ? `Layer 0 - Start: ${toHex(pfiData.start, 8, 6)} - End: ${toHex(pfiData.endLayer, 8, 6)} - Size: ${toHex(layer0Size)} (${layer0Size} sectors, ${layer0Size * 2048} bytes)\n`
+            + `Layer 1 - Difference from Layer 0: ${toHex(pfiData.endDiff, 8, 6)} - Size: ${toHex(layer1Size)} (${layer1Size} sectors, ${layer1Size * 2048} bytes)\n`
             : `Layer 0 - Size: ${layer0Size} sectors, ${layer0Size * 2048} bytes\n`
             + `Layer 1 - Size: ${layer1Size} sectors, ${layer1Size * 2048} bytes\n`;
         //pfiData.output += `Layerbreak: ${layer0Size}`;
@@ -117,8 +117,8 @@ function parsePfiCombo() {
         totalSize += layer0Size + layer1Size;
 
         pfiOutput += verbose
-            ? `Layer 0 - Start: ${toHex(pfi0Data.start)} - End: ${toHex(pfi0Data.endDiff)} - Size: ${toHex(layer0Size)} (${layer0Size} sectors, ${layer0Size * 2048} bytes)\n`
-            + `Layer 1 - Start: ${toHex(pfi1Data.start)} - End: ${toHex(pfi1Data.endDiff)} - Size: ${toHex(layer1Size)} (${layer1Size} sectors, ${layer1Size * 2048} bytes)\n`
+            ? `Layer 0 - Start: ${toHex(pfi0Data.start, 8, 6)} - End: ${toHex(pfi0Data.endDiff, 8, 6)} - Size: ${toHex(layer0Size)} (${layer0Size} sectors, ${layer0Size * 2048} bytes)\n`
+            + `Layer 1 - Start: ${toHex(pfi1Data.start, 8, 6)} - End: ${toHex(pfi1Data.endDiff, 8, 6)} - Size: ${toHex(layer1Size)} (${layer1Size} sectors, ${layer1Size * 2048} bytes)\n`
             : `Layer 0 - Size: ${layer0Size} sectors, ${layer0Size * 2048} bytes\n`
             + `Layer 1 - Size: ${layer1Size} sectors, ${layer1Size * 2048} bytes\n`;
     }
@@ -140,8 +140,8 @@ function parsePfiCombo() {
         const layer1Size = pfi1L1 + padL1 + pfi0L1;
 
         pfiOutput += verbose
-            ? `Layer 0 - Start: ${toHex(pfi0Data.start)}/${toHex(pfi1Data.start)} - End: ${toHex(pfi0Data.endLayer)}/${toHex(pfi1Data.endLayer)} - Size: ${toHex(layer0Size)} (${layer0Size} sectors, ${layer0Size * 2048} bytes)\n`
-            + `Layer 1 - Difference from Layer 0: ${toHex(pfi0Data.endDiff)}/${toHex(pfi1Data.endDiff)} - Size: ${toHex(layer1Size)} (${layer1Size} sectors, ${layer1Size * 2048} bytes)\n`
+            ? `Layer 0 - Start: ${toHex(pfi0Data.start, 8, 6)}/${toHex(pfi1Data.start, 8, 6)} - End: ${toHex(pfi0Data.endLayer, 8, 6)}/${toHex(pfi1Data.endLayer, 8, 6)} - Size: ${toHex(layer0Size)} (${layer0Size} sectors, ${layer0Size * 2048} bytes)\n`
+            + `Layer 1 - Difference from Layer 0: ${toHex(pfi0Data.endDiff, 8, 6)}/${toHex(pfi1Data.endDiff, 8, 6)} - Size: ${toHex(layer1Size)} (${layer1Size} sectors, ${layer1Size * 2048} bytes)\n`
             : `Layer 0 - Size: ${layer0Size} sectors, ${layer0Size * 2048} bytes\n`
             + `Layer 1 - Size: ${layer1Size} sectors, ${layer1Size * 2048} bytes\n`;
     } else {

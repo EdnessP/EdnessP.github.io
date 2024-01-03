@@ -1,4 +1,4 @@
-// Written by Edness   2022-09-07 - 2023-11-18
+// Written by Edness   2022-09-07 - 2024-01-03
 
 function toInt(hexStr) {
     const nybbles = 12; // limit is 1<<53 (13.25), but using 1<<48 (12) to be byte aligned,
@@ -41,34 +41,35 @@ function hexField(elem, size, hdrSkip = "") {
     return strFix.slice(hdrSkipped ? hdrSkip.length : 0);
 }
 
-function toHex(num, size = 8) {
+function toHex(num, size = 8, mask = size) {
+    num = BigInt(num) & ((1n << (BigInt(mask) * 4n)) - 1n);
     return `0x${num.toString(16).padStart(size, "0").toUpperCase()}`;
 }
 
 function arrToInt(arr) {
-    let int = 0n;
+    let num = 0n;
     for (let i = 0; i < arr.length; i++) {
-        int <<= 8n;
-        int |= BigInt(arr[i]);
+        num <<= 8n;
+        num |= BigInt(arr[i]);
     }
-    return arr.length <= 6 ? Number(int) : int;
+    return arr.length <= 6 ? Number(num) : num;
 }
 
-function intToArr(int, arrLen, arrIdx = arrLen - 1, arr) {
-    int = BigInt(int);
+function intToArr(num, arrLen, arrIdx = arrLen - 1, arr) {
+    num = BigInt(num);
     if (typeof arr === "undefined") {
         arr = new Uint8Array(arrLen);
     }
     for (; arrIdx >= 0; arrIdx--) {
-        arr[arrIdx] |= Number(int & 0xFFn);
-        int >>= 8n;
+        arr[arrIdx] |= Number(num & 0xFFn);
+        num >>= 8n;
     }
     return arr;
 }
 
-function signExtend(int, bits) {
+function signExtend(num, bits) {
     bits = 32 - bits;
-    return int << bits >> bits;
+    return num << bits >> bits;
 }
 
 /*
@@ -101,10 +102,10 @@ function strReverse(str) {
     return str.split("").reverse().join("");
 }
 
-function intReverse(int, intLen) {
+function intReverse(num, intLen) {
     // was originally called endianReverse but consistency
     // (and yes ik this is inefficient but variable sizes)
-    return arrToInt(intToArr(int, intLen).reverse());
+    return arrToInt(intToArr(num, intLen).reverse());
 }
 
 function arrCompare(arrLeft, arrRight) {
