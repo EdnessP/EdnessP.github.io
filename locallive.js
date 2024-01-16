@@ -1,4 +1,4 @@
-// Written by Edness   2022-09-07 - 2024-01-03
+// Written by Edness   2022-09-07 - 2024-01-16
 
 function toInt(hexStr) {
     const nybbles = 12; // limit is 1<<53 (13.25), but using 1<<48 (12) to be byte aligned,
@@ -42,7 +42,9 @@ function hexField(elem, size, hdrSkip = "") {
 }
 
 function toHex(num, size = 8, mask = size) {
-    num = BigInt(num) & ((1n << (BigInt(mask) * 4n)) - 1n);
+    if (size != mask) {
+        num = BigInt(num) & ((1n << (BigInt(mask) * 4n)) - 1n);
+    }
     return `0x${num.toString(16).padStart(size, "0").toUpperCase()}`;
 }
 
