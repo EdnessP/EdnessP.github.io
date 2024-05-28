@@ -2,7 +2,7 @@
 // for decoding, and the function at  00120160  for encoding
 // in the PS2 PAL v1.00 executable of The Sims 2: Pets console
 
-// Written by Edness   v1.3   2023-03-18 - 2023-08-16
+// Written by Edness   v1.4   2023-03-18 - 2024-01-03
 
 const s2PetsKeyLen = 19;
 const s2PetsDecLen = 13;
@@ -61,7 +61,7 @@ const s2PetsGifts = { // head fashion icons for cats reuse the ones for dogs
     50: "Unused ID"
 };
 
-function s2PetsDecodeKey(key) {
+function s2pDecodeGiftKey(key) {
     const inKey = key.toUpperCase().replace(/[^0-9A-Z]/g, "").slice(0, s2PetsKeyLen);
     const outKey = document.getElementById("sims-key-output");
     const outName = document.getElementById("sims-key-name-output");
@@ -95,11 +95,11 @@ function s2PetsDecodeKey(key) {
 
     // Originally this was a very long routine on PS2 that's been significantly simplified here.
     const keyDec = new Uint8Array(s2PetsDecLen);
-    for (let i = 0, j = 0; i < 2; i++, j += 5) {
+    for (let i = 0, j = 0; i < 14; i += 7, j += 5) {
         for (let k = 0; k < 7; k++) {
             for (let g = j; g < j + 5; g++) {
-                keyDec[g] = keyEnc[k + i * 7] >>> g - j & 1 ? keyDec[g] | 1 << k : keyDec[g] & ~(1 << k);
-                                /* char 0-14 */ /*>>0-4*/
+                keyDec[g] = keyEnc[k + i] >>> g - j & 1 ? keyDec[g] | 1 << k : keyDec[g] & ~(1 << k);
+                                /*chr0-14*/ /*>>0-4*/
             }
         }
     }
@@ -140,7 +140,7 @@ function s2PetsDecodeKey(key) {
     outName.value = Array.from(keyDec.slice(0, 8)).map(idx => s2PetsChars[idx]).join("").trimEnd();
 }
 
-function s2PetsEncodeKey() {
+function s2pEncodeGiftKey() {
     const outKey = document.getElementById("sims-key-output");
     const outName = document.getElementById("sims-key-name-output").value;
     const outGiftID = document.getElementById("sims-gift-id-output");
@@ -185,10 +185,10 @@ function s2PetsEncodeKey() {
     intToArr(keyHash, s2PetsDecLen, s2PetsDecLen - 1, keyDec);
 
     // Originally this was a very long routine on PS2 that's been significantly simplified here.
-    for (let i = 0, j = 0; i < 2; i++, j += 5) {
+    for (let i = 0, j = 0; i < 14; i += 7, j += 5) {
         for (let k = 0; k < 7; k++) {
             for (let g = j; g < j + 5; g++) {
-                let idx = k + i * 7; // char 0-14                    /*<<0-4*/                    /*<<0-4*/
+                let idx = k + i; // char 0-14                        /*<<0-4*/                    /*<<0-4*/
                 keyEnc[idx] = keyDec[g] >>> k & 1 ? keyEnc[idx] | 1 << g - j : keyEnc[idx] & ~(1 << g - j);
             }
         }

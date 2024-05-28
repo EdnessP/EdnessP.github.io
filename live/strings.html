@@ -281,11 +281,11 @@
                 <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/Sims2PetsUnlockKey.js">JS (Live)</a>.
         </div>
         <form class="d-flex">
-            <input class="form-control mt-2 me-2 local-output-4x6-key" type="text" placeholder="Unlock Code" id="sims-key-output" oninput="s2PetsDecodeKey(this.value)" maxlength=23>
-            <input class="form-control mt-2 me-1" type="text" placeholder="Name" id="sims-key-name-output" oninput="s2PetsEncodeKey()" maxlength=8>
+            <input class="form-control mt-2 me-2 local-output-4x6-key" type="text" placeholder="Unlock Code" id="sims-key-output" oninput="s2pDecodeGiftKey(this.value)" maxlength=23>
+            <input class="form-control mt-2 me-1" type="text" placeholder="Name" id="sims-key-name-output" oninput="s2pEncodeGiftKey()" maxlength=8>
         </form>
         <form class="d-flex">
-            <input class="form-control mt-2 me-2 local-output-number" type="number" placeholder="ID" id="sims-gift-id-output" oninput="s2PetsEncodeKey()" min=0 max=50>
+            <input class="form-control mt-2 me-2 local-output-number" type="number" placeholder="ID" id="sims-gift-id-output" oninput="s2pEncodeGiftKey()" min=0 max=50>
             <input class="form-control mt-2 me-1" type="text" placeholder="Gift" id="sims-gift-name-output" readonly>
         </form>
         <br>
