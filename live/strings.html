@@ -296,7 +296,7 @@
         <h4>String Hashing</h4>
         <div class="info-table">
             <p id="about">A 32-bit string hashing algorithm used for looking up files by their hashed filenames.
-            <p id="indepth">The string is converted to lower case, and the initial hash is set to -1. For each character, the hash is XORed by the ASCII value of the character shifted left by 24 bits. Then, if the hash is a negative number, it's added to itself, to which the result is XORed with 79764919, otherwise the hash is shifted left by 1 bit, and this entire process is repeated 8 times. Finally, the hash is NORed.
+            <p id="indepth">The string is converted to lower case, and the initial hash is set to -1. For each character, the hash is XORed by the ASCII value of the character shifted left by 24 bits. Then, if the hash is a negative number, it's added to itself, to which the result is XORed with 79764919, otherwise the hash is shifted left by 1 bit, and this entire process is repeated 8 times. Finally, the hash is NOT'd.
             <p id="source">
                 <a href="https://github.com/EdnessP/scripts/blob/main/other/TRLegendHash.py">Py (Standalone)</a>,
                 <a href="https://github.com/EdnessP/EdnessP.github.io/blob/main/live/strings/TRLegendHash.js">JS (Live)</a>.
